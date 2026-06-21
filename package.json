@@ -4,6 +4,9 @@
   "private": true,
   "description": "Mise — Marc & Anna's kitchen brain. Scan it in, see what's dying, get 3 good dinners.",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

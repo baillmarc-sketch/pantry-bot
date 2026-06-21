@@ -53,6 +53,19 @@ npm run typecheck   # tsc --noEmit (strict, noUncheckedIndexedAccess)
 npm test            # vitest run
 ```
 
+## Deploy (Vercel)
+
+Zero-config — Vercel auto-detects Next.js. No env vars needed yet (Supabase/AI
+are parked). Two ways:
+
+- **Git integration (recommended):** Vercel dashboard → New Project → import
+  `baillmarc-sketch/pantry-bot` → Deploy. Every push then auto-deploys; pushes
+  to the default branch are production, other branches get preview URLs.
+- **CLI:** `vercel deploy --prod` from the repo root (needs `vercel login` or a
+  `--token`).
+
+No build config required: build `next build`, output `.next`, install `npm install`.
+
 ### Proof (last run)
 
 ```

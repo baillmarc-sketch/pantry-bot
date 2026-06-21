@@ -1,0 +1,27 @@
+{
+  "_meta": {
+    "purpose": "House staples seed list for Marc + Anna. Read as 'assumed on hand' by the ranker so common seasonings don't count as 'missing'.",
+    "note": "Editable in Settings later; this is the seed, not a hard-coded truth."
+  },
+  "staples": [
+    "olive oil",
+    "neutral oil",
+    "kosher salt",
+    "black pepper",
+    "garlic",
+    "ginger",
+    "onion",
+    "soy sauce",
+    "fish sauce",
+    "rice vinegar",
+    "sesame oil",
+    "chili crisp",
+    "miso",
+    "tahini",
+    "lemon",
+    "rice dry",
+    "eggs",
+    "butter"
+  ],
+  "weekly_habits": ["egg bites", "chia pudding"]
+}

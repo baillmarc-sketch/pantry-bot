@@ -1,0 +1,37 @@
+{
+  "_meta": {
+    "purpose": "The $0 cost layer: a local normalization dictionary so most receipt lines never touch a model.",
+    "note": "Maps messy receipt/scan text -> normalized_name used everywhere. Grows freely; logic in lib/core/normalize.ts."
+  },
+  "aliases": {
+    "org cukes": "cucumber",
+    "cukes": "cucumber",
+    "cucumbers": "cucumber",
+    "english cucumber": "cucumber",
+    "zucchini squash": "zucchini",
+    "courgette": "zucchini",
+    "chx thigh": "chicken thighs",
+    "chx thighs": "chicken thighs",
+    "chicken thigh": "chicken thighs",
+    "bnls thigh": "chicken thighs",
+    "chx breast": "chicken breast",
+    "atlantic salmon": "salmon",
+    "salmon fillet": "salmon",
+    "wild salmon": "salmon",
+    "cod fillet": "cod",
+    "steak tips": "steak",
+    "sirloin tips": "steak",
+    "lg eggs": "eggs",
+    "large eggs": "eggs",
+    "dozen eggs": "eggs",
+    "whole milk": "milk",
+    "2% milk": "milk",
+    "swt potato": "sweet potato",
+    "sweet potatoes": "sweet potato",
+    "yam": "sweet potato",
+    "cilantro": "fresh herbs",
+    "parsley": "fresh herbs",
+    "unsalted butter": "butter",
+    "cultured butter": "butter"
+  }
+}

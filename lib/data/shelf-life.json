@@ -1,0 +1,119 @@
+{
+  "_meta": {
+    "purpose": "Catalog: food -> conservative shelf life by storage location. Read by lib/core/spoilage.ts.",
+    "source": "Values track USDA FoodKeeper-style cold-storage guidance, rounded to the SHORTER end on purpose.",
+    "disclaimer": "GUIDANCE ONLY. This is not a food-safety guarantee. When in doubt, inspect and use human judgment. Unknown items resolve to status 'unknown' (Confirm status), never to 'fresh'.",
+    "units": "shelf_life_days and after_opened_days are whole days. null = not a recommended way to store this item.",
+    "grow_without_touching_logic": true
+  },
+  "items": {
+    "chicken thighs": {
+      "category": "meat",
+      "shelf_life_days": { "fridge": 2, "freezer": 270, "pantry": null },
+      "after_opened_days": null,
+      "note": "Raw poultry — highly perishable. Cook or freeze within ~1-2 days."
+    },
+    "chicken breast": {
+      "category": "meat",
+      "shelf_life_days": { "fridge": 2, "freezer": 270, "pantry": null },
+      "after_opened_days": null,
+      "note": "Raw poultry — highly perishable."
+    },
+    "salmon": {
+      "category": "seafood",
+      "shelf_life_days": { "fridge": 2, "freezer": 180, "pantry": null },
+      "after_opened_days": null,
+      "note": "Raw fish — highly perishable. Smell and color change fast."
+    },
+    "cod": {
+      "category": "seafood",
+      "shelf_life_days": { "fridge": 2, "freezer": 180, "pantry": null },
+      "after_opened_days": null,
+      "note": "Raw fish — highly perishable."
+    },
+    "steak": {
+      "category": "meat",
+      "shelf_life_days": { "fridge": 4, "freezer": 270, "pantry": null },
+      "after_opened_days": null,
+      "note": "Raw beef steak/tips."
+    },
+    "ground beef": {
+      "category": "meat",
+      "shelf_life_days": { "fridge": 2, "freezer": 120, "pantry": null },
+      "after_opened_days": null,
+      "note": "Ground meats spoil faster than whole cuts."
+    },
+    "eggs": {
+      "category": "dairy_eggs",
+      "shelf_life_days": { "fridge": 28, "freezer": null, "pantry": null },
+      "after_opened_days": null,
+      "note": "Refrigerated shell eggs keep 3-5 weeks; float test if unsure."
+    },
+    "milk": {
+      "category": "dairy_eggs",
+      "shelf_life_days": { "fridge": 7, "freezer": null, "pantry": null },
+      "after_opened_days": 7,
+      "note": "Use the carton date as a guide; smell before using."
+    },
+    "butter": {
+      "category": "dairy_eggs",
+      "shelf_life_days": { "fridge": 60, "freezer": 270, "pantry": null },
+      "after_opened_days": 30,
+      "note": "Cultured/French-style keeps well refrigerated."
+    },
+    "aged cheese": {
+      "category": "dairy_eggs",
+      "shelf_life_days": { "fridge": 42, "freezer": null, "pantry": null },
+      "after_opened_days": 21,
+      "note": "Hard/aged cheeses; trim surface mold on hard cheese only."
+    },
+    "goat cheese": {
+      "category": "dairy_eggs",
+      "shelf_life_days": { "fridge": 14, "freezer": null, "pantry": null },
+      "after_opened_days": 7,
+      "note": "Soft cheese — shorter window once opened."
+    },
+    "rice cooked": {
+      "category": "leftovers",
+      "shelf_life_days": { "fridge": 4, "freezer": 180, "pantry": null },
+      "after_opened_days": null,
+      "note": "Cool quickly and refrigerate within ~1 hour."
+    },
+    "rice dry": {
+      "category": "pantry",
+      "shelf_life_days": { "fridge": null, "freezer": null, "pantry": 730 },
+      "after_opened_days": 365,
+      "note": "White rice is shelf-stable for a long time when dry."
+    },
+    "sweet potato": {
+      "category": "produce",
+      "shelf_life_days": { "fridge": 21, "freezer": null, "pantry": 14 },
+      "after_opened_days": null,
+      "note": "Cool, dark, dry pantry storage preferred over fridge."
+    },
+    "zucchini": {
+      "category": "produce",
+      "shelf_life_days": { "fridge": 5, "freezer": 240, "pantry": null },
+      "after_opened_days": null,
+      "note": "Stores best unwashed in the crisper."
+    },
+    "cucumber": {
+      "category": "produce",
+      "shelf_life_days": { "fridge": 5, "freezer": null, "pantry": null },
+      "after_opened_days": null,
+      "note": "Sensitive to cold damage below ~50F; use the crisper."
+    },
+    "fresh herbs": {
+      "category": "produce",
+      "shelf_life_days": { "fridge": 5, "freezer": 120, "pantry": null },
+      "after_opened_days": null,
+      "note": "Soft herbs (cilantro, parsley) are short-lived."
+    },
+    "leftovers cooked": {
+      "category": "leftovers",
+      "shelf_life_days": { "fridge": 4, "freezer": 90, "pantry": null },
+      "after_opened_days": null,
+      "note": "General cooked-leftover guidance: ~3-4 days refrigerated."
+    }
+  }
+}

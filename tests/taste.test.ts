@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { palateMatchScore, dairyAssessment, finishingMoves } from '../lib/core/taste.js';
-import type { RecipeInput } from '../lib/core/types.js';
+import { palateMatchScore, dairyAssessment, finishingMoves } from '../lib/core/taste';
+import type { RecipeInput } from '../lib/core/types';
 
 function recipe(over: Partial<RecipeInput>): RecipeInput {
   return {

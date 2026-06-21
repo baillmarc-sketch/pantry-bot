@@ -4,7 +4,7 @@
 // Architectural rule: the AI is a swappable ADAPTER, not the brain. The pure
 // engine (lib/core) never imports this.
 
-import type { Location, RecipeInput } from '../core/types.js';
+import type { Location, RecipeInput } from '../core/types';
 
 export interface ParsedItem {
   normalized_name: string;

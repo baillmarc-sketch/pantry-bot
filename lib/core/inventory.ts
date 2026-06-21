@@ -4,7 +4,7 @@
 // mutable truth two phones race against. Concurrent edits are appended events that
 // reconcile by summation. Merge, never clobber. Rather double than lose.
 
-import type { InventoryItem, InventoryEvent } from './types.js';
+import type { InventoryItem, InventoryEvent } from './types';
 
 export interface DerivedItem extends InventoryItem {
   /** Σ quantity_change across this item's events, clamped at 0 for display. */

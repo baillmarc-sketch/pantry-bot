@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { MockAIProvider } from '../lib/ai/mock.js';
+import { MockAIProvider } from '../lib/ai/mock';
 
 const ai = new MockAIProvider();
 

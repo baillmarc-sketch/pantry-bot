@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Mise">
+  <rect width="512" height="512" rx="112" fill="#fbf7f0"/>
+  <circle cx="256" cy="264" r="150" fill="#fff" stroke="#ede6da" stroke-width="10"/>
+  <circle cx="256" cy="264" r="70" fill="#c98a2b"/>
+  <path d="M150 150c20-44 60-58 96-44" fill="none" stroke="#5e6b3b" stroke-width="22" stroke-linecap="round"/>
+  <rect x="120" y="392" width="272" height="26" rx="13" fill="#d6492f"/>
+</svg>

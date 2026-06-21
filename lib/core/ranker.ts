@@ -4,10 +4,10 @@
 // Priority order (from the build plan):
 //   expiring-first -> most-on-hand -> fewest-new -> palate -> leftovers
 
-import type { RecipeInput } from './types.js';
-import type { SpoilageStatus } from './spoilage.js';
-import { palateMatchScore, dairyAssessment, finishingMoves } from './taste.js';
-import { normalizeName } from './normalize.js';
+import type { RecipeInput } from './types';
+import type { SpoilageStatus } from './spoilage';
+import { palateMatchScore, dairyAssessment, finishingMoves } from './taste';
+import { normalizeName } from './normalize';
 import staplesData from '../data/staples.json';
 
 const STAPLES = new Set<string>(staplesData.staples.map((s) => normalizeName(s).name));

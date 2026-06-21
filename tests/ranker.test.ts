@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { rankRecipes, type PantryEntry } from '../lib/core/ranker.js';
-import { MockAIProvider } from '../lib/ai/mock.js';
-import type { RecipeInput } from '../lib/core/types.js';
+import { rankRecipes, type PantryEntry } from '../lib/core/ranker';
+import { MockAIProvider } from '../lib/ai/mock';
+import type { RecipeInput } from '../lib/core/types';
 
 const pantry: PantryEntry[] = [
   { normalized_name: 'salmon', status: 'today' },

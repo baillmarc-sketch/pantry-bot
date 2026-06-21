@@ -5,9 +5,9 @@
 //  - Unknown item / unknown storage => 'unknown' (Confirm status), NOT 'fresh'.
 //  - When storage or dates are missing, assume the SHORTER shelf life (conservative).
 
-import type { InventoryItem, Location } from './types.js';
+import type { InventoryItem, Location } from './types';
 import shelfLifeData from '../data/shelf-life.json';
-import { normalizeName } from './normalize.js';
+import { normalizeName } from './normalize';
 
 export interface ShelfLifeEntry {
   category: string;

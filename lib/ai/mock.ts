@@ -6,9 +6,9 @@ import type {
   ReceiptParseResult,
   FridgeParseResult,
   SuggestRecipesInput,
-} from './provider.js';
-import type { RecipeInput } from '../core/types.js';
-import { normalizeName } from '../core/normalize.js';
+} from './provider';
+import type { RecipeInput } from '../core/types';
+import { normalizeName } from '../core/normalize';
 
 /** A canned receipt as raw lines — mirrors what OCR would hand us. */
 const CANNED_RECEIPT_LINES = [

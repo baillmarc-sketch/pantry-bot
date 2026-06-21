@@ -1,8 +1,8 @@
 // Marc + Anna's palate, encoded as rules (not guesses). The ranker and the recipe
 // prompt both read this so suggestions are "ours," not generic.
 
-import type { RecipeInput } from './types.js';
-import { cleanText } from './normalize.js';
+import type { RecipeInput } from './types';
+import { cleanText } from './normalize';
 
 /** Boost keywords by cuisine lean. Matching any raises palate_match_score. */
 export const PALATE = {

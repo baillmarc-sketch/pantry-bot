@@ -1,0 +1,224 @@
+/* ============================================================
+   Mise — "Warm Market Stall"
+   Cream paper, ink text, one hot accent (chili-crisp red),
+   produce-green for fresh. Reads like a butcher's tag, not a
+   calorie app. Design tokens live here, at the top.
+   ============================================================ */
+:root {
+  /* surfaces */
+  --paper: #fbf7f0;
+  --card: #ffffff;
+  --ink: #1f1b16;
+  --ink-soft: #6b6258;
+
+  /* accents */
+  --chili: #d6492f;
+  --chili-ink: #ffffff;
+  --olive: #5e6b3b;
+  --amber: #c98a2b;
+  --line: #ede6da;
+
+  /* status (always paired with a glyph + word — never color alone) */
+  --fresh: var(--olive);
+  --soon: var(--amber);
+  --today: var(--chili);
+  --gone: var(--ink-soft);
+
+  /* type + space */
+  --font: ui-rounded, -apple-system, "SF Pro Rounded", system-ui, sans-serif;
+  --r: 14px;
+  --tap: 48px;
+
+  --shadow: 0 1px 2px rgba(31, 27, 22, 0.06), 0 6px 18px rgba(31, 27, 22, 0.05);
+
+  /* safe-area shortcuts */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Defend the warm palette: no auto dark-mode flip. */
+
+body {
+  min-height: 100dvh;
+  /* leave room for the fixed bottom nav + safe area */
+  padding-bottom: calc(72px + var(--safe-bottom));
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* iOS: all inputs >=16px kills focus-zoom; big targets */
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: 16px;
+  min-height: var(--tap);
+}
+
+h1, h2, h3 { margin: 0; letter-spacing: -0.01em; }
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: calc(var(--safe-top) + 16px) 20px 12px;
+  background: linear-gradient(var(--paper) 70%, rgba(251, 247, 240, 0));
+}
+.app-header .kicker {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--chili);
+}
+.app-header h1 { font-size: 30px; font-weight: 800; }
+.app-header .sub { color: var(--ink-soft); font-size: 15px; margin-top: 2px; }
+
+.screen { padding: 4px 16px 24px; max-width: 560px; margin: 0 auto; }
+
+.section-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 22px 4px 10px;
+}
+
+/* ---- cards ---- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+/* ---- recipe card ---- */
+.recipe { margin-bottom: 14px; }
+.recipe .title { font-size: 19px; font-weight: 800; line-height: 1.2; }
+.recipe .why {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--chili);
+}
+.recipe .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.recipe .uses { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+.recipe .needs { margin-top: 8px; font-size: 14px; color: var(--ink-soft); }
+.recipe .finish {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+  font-size: 14px;
+}
+.recipe .finish b { color: var(--olive); }
+.recipe .dairy {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--amber);
+}
+
+/* ---- chips ---- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  white-space: nowrap;
+}
+.chip .glyph { font-size: 11px; line-height: 1; }
+.chip.fresh { color: var(--fresh); border-color: color-mix(in srgb, var(--fresh) 35%, var(--line)); }
+.chip.soon  { color: var(--soon);  border-color: color-mix(in srgb, var(--soon) 40%, var(--line)); }
+.chip.today { color: var(--today); border-color: color-mix(in srgb, var(--today) 45%, var(--line)); background: color-mix(in srgb, var(--today) 7%, var(--paper)); }
+.chip.past  { color: var(--gone); border-color: var(--gone); }
+.chip.unknown { color: var(--gone); border-style: dashed; }
+.chip.ingredient { color: var(--ink-soft); }
+
+/* ---- inventory rows ---- */
+.inv-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  margin-bottom: 10px;
+}
+.inv-item .name { font-size: 17px; font-weight: 700; }
+.inv-item .detail { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+.inv-item .right { text-align: right; flex-shrink: 0; }
+.inv-item .days { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+
+.callout {
+  font-size: 12px;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--amber) 10%, var(--paper));
+  border: 1px solid color-mix(in srgb, var(--amber) 30%, var(--line));
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 14px 4px;
+  line-height: 1.45;
+}
+
+/* ---- bottom nav ---- */
+.nav {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-around;
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  backdrop-filter: saturate(1.2) blur(10px);
+  border-top: 1px solid var(--line);
+  padding: 8px 8px calc(8px + var(--safe-bottom));
+}
+.nav a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 0;
+  min-height: var(--tap);
+  justify-content: center;
+  color: var(--ink-soft);
+  font-size: 11px;
+  font-weight: 700;
+}
+.nav a .ico { font-size: 20px; line-height: 1; }
+.nav a.active { color: var(--chili); }
+.nav a.soon { opacity: 0.45; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+:focus-visible { outline: 2px solid var(--chili); outline-offset: 2px; border-radius: 6px; }

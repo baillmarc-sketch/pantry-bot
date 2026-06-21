@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { deriveInventory, presentItems } from '../lib/core/inventory.js';
-import type { InventoryItem, InventoryEvent } from '../lib/core/types.js';
+import { deriveInventory, presentItems } from '../lib/core/inventory';
+import type { InventoryItem, InventoryEvent } from '../lib/core/types';
 
 function item(id: string, over: Partial<InventoryItem> = {}): InventoryItem {
   return {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { spoilageStatus, STATUS_META } from '../lib/core/spoilage.js';
+import { spoilageStatus, STATUS_META } from '../lib/core/spoilage';
 
 const TODAY = '2026-06-21';
 

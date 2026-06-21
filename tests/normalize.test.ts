@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { cleanText, normalizeName } from '../lib/core/normalize.js';
+import { cleanText, normalizeName } from '../lib/core/normalize';
 
 describe('normalize ($0 cost layer)', () => {
   it('cleans qty/unit noise and punctuation', () => {

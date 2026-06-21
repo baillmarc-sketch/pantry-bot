@@ -1,43 +1,33 @@
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
 import { Header, StatusChip } from './ui';
-import { SEED_ITEMS, SEED_EVENTS } from '../lib/fixtures/seed';
-import { pantrySnapshot, toPantryEntries } from '../lib/core/snapshot';
-import { rankRecipes } from '../lib/core/ranker';
-import { MockAIProvider } from '../lib/ai/mock';
-
-export const dynamic = 'force-dynamic'; // recompute statuses against "now"
-
-function todayIso() {
-  return new Date().toISOString().slice(0, 10);
-}
+import { Toolbar } from './controls';
+import { useMise } from '../lib/store/useMise';
+import type { SpoilageStatus } from '../lib/core/spoilage';
 
 function whyLine(useSoonDisplay: string[], usedCount: number): string {
   if (useSoonDisplay.length === 1) return `Uses your ${useSoonDisplay[0]} before it turns`;
   if (useSoonDisplay.length > 1)
     return `Uses ${useSoonDisplay.slice(0, 2).join(' & ')} before they turn`;
-  return `Uses ${usedCount} things you already have`;
+  if (usedCount > 0) return `Uses ${usedCount} thing${usedCount === 1 ? '' : 's'} you already have`;
+  return 'A solid weeknight option';
 }
 
-export default async function HomePage() {
-  const today = todayIso();
-  const snapshot = pantrySnapshot(SEED_ITEMS, SEED_EVENTS, today);
-  const nameToDisplay = new Map(snapshot.map((s) => [s.normalized_name, s.display_name]));
-  const nameToStatus = new Map(snapshot.map((s) => [s.normalized_name, s.spoilage.status]));
+export default function HomePage() {
+  const { snapshot, recipes, cookRecipe } = useMise();
+  const [msg, setMsg] = useState('');
 
-  const ai = new MockAIProvider();
-  const recipes = await ai.suggestRecipes({
-    pantry: snapshot.map((s) => ({
-      normalized_name: s.normalized_name,
-      display_name: s.display_name,
-      status: s.spoilage.status,
-    })),
-  });
-  const ranked = rankRecipes(recipes, toPantryEntries(snapshot), { limit: 5 });
+  const nameToDisplay = new Map(snapshot.map((s) => [s.normalized_name, s.display_name]));
+  const nameToStatus = new Map<string, SpoilageStatus>(
+    snapshot.map((s) => [s.normalized_name, s.spoilage.status]),
+  );
+  const disp = (n: string) => nameToDisplay.get(n) ?? n;
 
   const urgent = snapshot.filter((s) =>
     ['past', 'today', 'soon'].includes(s.spoilage.status),
   );
-
-  const disp = (n: string) => nameToDisplay.get(n) ?? n;
 
   return (
     <>
@@ -47,7 +37,13 @@ export default async function HomePage() {
         sub="Dinners that use what's about to turn — for Marc & Anna."
       />
       <div className="screen">
-        {urgent.length > 0 && (
+        <Toolbar />
+
+        <p aria-live="polite" className="callout" style={{ display: msg ? 'block' : 'none' }}>
+          {msg}
+        </p>
+
+        {urgent.length > 0 ? (
           <div className="callout">
             <b>Using up:</b>{' '}
             {urgent.map((u, i) => {
@@ -61,13 +57,19 @@ export default async function HomePage() {
               );
             })}
           </div>
+        ) : (
+          <div className="callout">Nothing urgent — nice. Cook whatever sounds good.</div>
         )}
 
-        {ranked.map((r) => {
+        {recipes.length === 0 && (
+          <div className="empty">
+            Your pantry’s empty. <Link href="/scan">Scan a receipt</Link> to get started.
+          </div>
+        )}
+
+        {recipes.map((r) => {
           const useSoonDisplay = r.use_soon_items.map(disp);
-          const otherUsed = r.inventory_items_used.filter(
-            (n) => !r.use_soon_items.includes(n),
-          );
+          const otherUsed = r.inventory_items_used.filter((n) => !r.use_soon_items.includes(n));
           return (
             <article key={r.id} className="card recipe">
               <div className="title">{r.title}</div>
@@ -91,9 +93,7 @@ export default async function HomePage() {
               </div>
 
               {r.missing_items.length > 0 && (
-                <div className="needs">
-                  Still need: {r.missing_items.map(disp).join(', ')}
-                </div>
+                <div className="needs">Still need: {r.missing_items.map(disp).join(', ')}</div>
               )}
 
               <div className="finish">
@@ -105,6 +105,22 @@ export default async function HomePage() {
                   ⚠️ {r.dairy_warnings[0]} {r.dairy_swaps[0] ?? ''}
                 </div>
               )}
+
+              <div className="row-actions">
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => {
+                    const { consumed } = cookRecipe(r);
+                    setMsg(
+                      consumed > 0
+                        ? `Cooked “${r.title}” — used ${consumed} item${consumed === 1 ? '' : 's'} from your pantry.`
+                        : `Cooked “${r.title}”.`,
+                    );
+                  }}
+                >
+                  Cooked this
+                </button>
+              </div>
             </article>
           );
         })}

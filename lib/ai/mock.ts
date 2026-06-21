@@ -62,53 +62,58 @@ export class MockAIProvider implements AIProvider {
   }
 
   async suggestRecipes(input: SuggestRecipesInput): Promise<RecipeInput[]> {
-    const count = input.count ?? 5;
-    const all: RecipeInput[] = [
-      {
-        id: 'r-salmon-rice',
-        title: 'Miso-glazed salmon with sesame rice',
-        servings: 2,
-        time_estimate: 25,
-        leftover_score: 0.4,
-        tags: ['asian', 'one-pan'],
-        ingredients: [
-          { name: 'salmon' },
-          { name: 'rice dry', assumed_staple: true },
-          { name: 'miso', assumed_staple: true },
-          { name: 'soy sauce', assumed_staple: true },
-          { name: 'scallion' },
-        ],
-      },
-      {
-        id: 'r-chicken-sheet',
-        title: 'Sheet-pan chicken thighs, sweet potato & zucchini',
-        servings: 2,
-        time_estimate: 40,
-        leftover_score: 0.7,
-        tags: ['med', 'sheet-pan'],
-        ingredients: [
-          { name: 'chicken thighs' },
-          { name: 'sweet potato' },
-          { name: 'zucchini' },
-          { name: 'lemon', assumed_staple: true },
-          { name: 'olive oil', assumed_staple: true },
-        ],
-      },
-      {
-        id: 'r-cucumber-salad',
-        title: 'Smashed cucumber salad',
-        servings: 2,
-        time_estimate: 10,
-        leftover_score: 0.2,
-        tags: ['asian', 'side'],
-        ingredients: [
-          { name: 'cucumber' },
-          { name: 'rice vinegar', assumed_staple: true },
-          { name: 'chili crisp', assumed_staple: true },
-          { name: 'garlic', assumed_staple: true },
-        ],
-      },
-    ];
-    return all.slice(0, count);
+    return mockRecipes(input.count ?? 5);
   }
 }
+
+/** Sync accessor for the same fixtures — convenient for client components. */
+export function mockRecipes(count = 5): RecipeInput[] {
+  return RECIPE_FIXTURES.slice(0, count);
+}
+
+const RECIPE_FIXTURES: RecipeInput[] = [
+  {
+    id: 'r-salmon-rice',
+    title: 'Miso-glazed salmon with sesame rice',
+    servings: 2,
+    time_estimate: 25,
+    leftover_score: 0.4,
+    tags: ['asian', 'one-pan'],
+    ingredients: [
+      { name: 'salmon' },
+      { name: 'rice dry', assumed_staple: true },
+      { name: 'miso', assumed_staple: true },
+      { name: 'soy sauce', assumed_staple: true },
+      { name: 'scallion' },
+    ],
+  },
+  {
+    id: 'r-chicken-sheet',
+    title: 'Sheet-pan chicken thighs, sweet potato & zucchini',
+    servings: 2,
+    time_estimate: 40,
+    leftover_score: 0.7,
+    tags: ['med', 'sheet-pan'],
+    ingredients: [
+      { name: 'chicken thighs' },
+      { name: 'sweet potato' },
+      { name: 'zucchini' },
+      { name: 'lemon', assumed_staple: true },
+      { name: 'olive oil', assumed_staple: true },
+    ],
+  },
+  {
+    id: 'r-cucumber-salad',
+    title: 'Smashed cucumber salad',
+    servings: 2,
+    time_estimate: 10,
+    leftover_score: 0.2,
+    tags: ['asian', 'side'],
+    ingredients: [
+      { name: 'cucumber' },
+      { name: 'rice vinegar', assumed_staple: true },
+      { name: 'chili crisp', assumed_staple: true },
+      { name: 'garlic', assumed_staple: true },
+    ],
+  },
+];

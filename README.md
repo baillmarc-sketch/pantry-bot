@@ -10,11 +10,14 @@ and [`BUILDER-PROFILE.md`](BUILDER-PROFILE.md) for the full intent.
 
 | Phase | What | State |
 |---|---|---|
-| **0** | Framework-free core engine + data catalogs + tests | ✅ **this slice** |
-| 0 | Next.js + Supabase + RLS shell, PWA, manual add/edit UI | next |
-| 1 | Core loop on `MockAIProvider` (receipt → confirm → recipes → cooked) | planned |
+| **0** | Framework-free core engine + data catalogs + tests | ✅ done |
+| **0** | Next.js + "Warm Market Stall" + PWA shell, Home & Inventory | ✅ done · live on Vercel |
+| **1** | Core loop on `MockAIProvider`: scan → confirm → inventory → cook, local-first persistence | ✅ done |
 | 2 | Real `AnthropicAIProvider` + fridge vision (propose-only) | planned |
+| 2 | Supabase + RLS for two-phone sync (replaces localStorage) | planned |
 | 3 | Learns your staples & weekly habits | planned |
+
+**Live:** https://pantry-bot-pi.vercel.app — runs entirely on the mock + localStorage at **$0**.
 
 ## Architecture — pure engine, swappable seams
 
@@ -49,8 +52,13 @@ lib/
 
 ```bash
 npm install
+npm run dev         # next dev (http://localhost:3000)
 npm run typecheck   # tsc --noEmit (strict, noUncheckedIndexedAccess)
 npm test            # vitest run
+
+# headless verification (needs a running server on $BASE, default :3100)
+node scripts/e2e.mjs            # drives scan -> confirm -> inventory -> cook
+SHOOT=1 node scripts/shoot.mjs  # iPhone-viewport screenshots
 ```
 
 ## Deploy (Vercel)
@@ -69,10 +77,13 @@ No build config required: build `next build`, output `.next`, install `npm insta
 ### Proof (last run)
 
 ```
-Test Files  6 passed (6)
-     Tests  29 passed (29)
+Test Files  7 passed (7)
+     Tests  34 passed (34)        # vitest: unit
+8/8 PASS  ALL PASS                # scripts/e2e.mjs: headless loop
 ```
-Covers: event-sourced derivation incl. two-phone reconciliation & no-negative/no-silent-loss;
+Unit covers: event-sourced derivation incl. two-phone reconciliation & no-negative/no-silent-loss;
 spoilage transitions (fresh/soon/today/past/unknown) + conservative fallbacks + opened-clock;
 the dairy predicate; palate scoring; recipe ranking order; the $0 normalization dictionary;
-and the mock AI seam (propose-only fridge parse).
+the mock AI seam (propose-only fridge parse); and the store action builders (ingest/merge,
+consume, discard, cook). E2e drives scan → confirm (drop one) → inventory, asserts the merge
+math, then confirms a mutation persists across reload (localStorage) and cooking deducts.

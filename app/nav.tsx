@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 const ITEMS = [
   { href: '/', label: 'Cook', ico: '🍳', live: true },
   { href: '/inventory', label: 'Pantry', ico: '🧺', live: true },
-  { href: '/scan', label: 'Scan', ico: '📷', live: false },
+  { href: '/scan', label: 'Scan', ico: '📷', live: true },
   { href: '/recipes', label: 'Recipes', ico: '📖', live: false },
   { href: '/list', label: 'List', ico: '🛒', live: false },
 ];
@@ -16,7 +16,8 @@ export function NavBar() {
   return (
     <nav className="nav" aria-label="Primary">
       {ITEMS.map((it) => {
-        const active = path === it.href;
+        const active =
+          path === it.href || (it.href !== '/' && path.startsWith(`${it.href}/`));
         const cls = ['', active ? 'active' : '', it.live ? '' : 'soon']
           .filter(Boolean)
           .join(' ');

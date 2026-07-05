@@ -93,4 +93,10 @@ export interface RecipeInput {
   leftover_score?: number;
   /** Optional tags the ranker/taste engine can read (e.g. 'asian', 'one-pan'). */
   tags?: string[];
+  /** Explicit finishing move — overrides the taste engine's guess when set. */
+  finishing_move?: string;
+  /** Free-form method/notes for saved (user-authored) recipes. */
+  notes?: string;
+  /** True for recipes the household saved themselves (vs. generated). */
+  saved?: boolean;
 }

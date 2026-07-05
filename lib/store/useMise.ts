@@ -10,6 +10,8 @@ import {
   discard,
   cook,
   toggleLike,
+  saveRecipe,
+  removeRecipe,
   resetDemo,
 } from './miseStore';
 import { deriveInventory } from '../core/inventory';
@@ -23,12 +25,15 @@ export interface MiseView {
   snapshot: PantryItem[];
   likes: PantryItem[];
   recipes: RankedRecipe[];
+  yourRecipes: RankedRecipe[];
   today: string;
   setActor: typeof setActor;
   applyScan: typeof applyScan;
   consume: typeof consume;
   discard: typeof discard;
   toggleLike: typeof toggleLike;
+  saveRecipe: typeof saveRecipe;
+  removeRecipe: typeof removeRecipe;
   cookRecipe: (recipe: RankedRecipe) => { consumed: number };
   reset: typeof resetDemo;
 }
@@ -38,7 +43,7 @@ export function useMise(recipeLimit = 5): MiseView {
     hydrate();
   }, []);
 
-  const { items, events, actor } = useMiseState();
+  const { items, events, actor, savedRecipes } = useMiseState();
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
 
   const snapshot = useMemo(
@@ -56,9 +61,18 @@ export function useMise(recipeLimit = 5): MiseView {
     [items, events, today],
   );
 
+  const entries = useMemo(() => toPantryEntries(snapshot), [snapshot]);
+
   const recipes = useMemo(
-    () => rankRecipes(mockRecipes(), toPantryEntries(snapshot), { limit: recipeLimit }),
-    [snapshot, recipeLimit],
+    () => rankRecipes(mockRecipes(), entries, { limit: recipeLimit }),
+    [entries, recipeLimit],
+  );
+
+  // Your saved recipes, ranked against the current pantry so each card knows
+  // what you've got and what's still needed. Always shown (not top-N capped).
+  const yourRecipes = useMemo(
+    () => rankRecipes(savedRecipes, entries),
+    [savedRecipes, entries],
   );
 
   return {
@@ -66,12 +80,15 @@ export function useMise(recipeLimit = 5): MiseView {
     snapshot,
     likes,
     recipes,
+    yourRecipes,
     today,
     setActor,
     applyScan,
     consume,
     discard,
     toggleLike,
+    saveRecipe,
+    removeRecipe,
     cookRecipe: (recipe) => cook(recipe, snapshot),
     reset: resetDemo,
   };

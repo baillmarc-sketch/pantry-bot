@@ -8,6 +8,7 @@
 import { useSyncExternalStore } from 'react';
 import type { InventoryItem, InventoryEvent, Actor, RecipeInput } from '../core/types';
 import { SEED_ITEMS, SEED_EVENTS } from '../fixtures/seed';
+import { SAVED_RECIPES_SEED } from '../fixtures/recipes';
 import {
   ingestConfirmed,
   consumeEvent,
@@ -22,16 +23,23 @@ export const HOUSEHOLD = 'h-marc-anna';
 const K_ITEMS = 'mise.items.v1';
 const K_EVENTS = 'mise.events.v1';
 const K_ACTOR = 'mise.actor.v1';
+const K_RECIPES = 'mise.recipes.v1';
 const K_PENDING = 'mise.pendingScan.v1';
 
 interface State {
   items: InventoryItem[];
   events: InventoryEvent[];
   actor: Actor;
+  savedRecipes: RecipeInput[];
 }
 
 // Stable initial reference so SSR and the first client render agree (no hydration mismatch).
-const SSR_STATE: State = { items: SEED_ITEMS, events: SEED_EVENTS, actor: 'marc' };
+const SSR_STATE: State = {
+  items: SEED_ITEMS,
+  events: SEED_EVENTS,
+  actor: 'marc',
+  savedRecipes: SAVED_RECIPES_SEED,
+};
 
 let state: State = SSR_STATE;
 let hydrated = false;
@@ -47,6 +55,7 @@ function persist() {
     localStorage.setItem(K_ITEMS, JSON.stringify(state.items));
     localStorage.setItem(K_EVENTS, JSON.stringify(state.events));
     localStorage.setItem(K_ACTOR, state.actor);
+    localStorage.setItem(K_RECIPES, JSON.stringify(state.savedRecipes));
   } catch {
     /* storage full / unavailable — keep working from memory */
   }
@@ -58,7 +67,15 @@ function loadFromStorage(): State | null {
     const i = localStorage.getItem(K_ITEMS);
     const e = localStorage.getItem(K_EVENTS);
     const a = (localStorage.getItem(K_ACTOR) as Actor) || 'marc';
-    if (i && e) return { items: JSON.parse(i), events: JSON.parse(e), actor: a };
+    const r = localStorage.getItem(K_RECIPES);
+    if (i && e)
+      return {
+        items: JSON.parse(i),
+        events: JSON.parse(e),
+        actor: a,
+        // Existing installs predate saved recipes -> fall back to the seed.
+        savedRecipes: r ? JSON.parse(r) : SAVED_RECIPES_SEED,
+      };
   } catch {
     /* corrupt — fall back to seed */
   }
@@ -160,14 +177,33 @@ export function toggleLike(itemId: string) {
   return { liked: nowLiked };
 }
 
+/** Save a user-authored recipe so it lives on the Cook screen. Newest first. */
+export function saveRecipe(recipe: RecipeInput) {
+  const savedRecipes = [
+    { ...recipe, saved: true },
+    ...state.savedRecipes.filter((r) => r.id !== recipe.id),
+  ];
+  commit({ ...state, savedRecipes });
+}
+
+export function removeRecipe(id: string) {
+  commit({ ...state, savedRecipes: state.savedRecipes.filter((r) => r.id !== id) });
+}
+
 export function resetDemo() {
   if (typeof window !== 'undefined') {
     localStorage.removeItem(K_ITEMS);
     localStorage.removeItem(K_EVENTS);
     localStorage.removeItem(K_ACTOR);
+    localStorage.removeItem(K_RECIPES);
     sessionStorage.removeItem(K_PENDING);
   }
-  state = { items: SEED_ITEMS, events: SEED_EVENTS, actor: state.actor };
+  state = {
+    items: SEED_ITEMS,
+    events: SEED_EVENTS,
+    actor: state.actor,
+    savedRecipes: SAVED_RECIPES_SEED,
+  };
   persist();
   emit();
 }

@@ -88,6 +88,44 @@ ok(dillRows === 1, `search "dill" narrows to ${dillRows} row (expected 1)`);
 ok(await page.getByText(/Dill Pickle/).first().isVisible(), 'dill pickle crackers matched by tag');
 await snap('likes-search');
 
+// 8. Saved recipes: the porcini sugo lives on the Cook screen
+await page.goto(`${base}/`, { waitUntil: 'load' });
+await page.waitForSelector('.recipe');
+ok(
+  await page.getByText('Your recipes').first().isVisible(),
+  'Home has a "Your recipes" section',
+);
+ok(
+  await page.getByText('Porcini Umami Sugo with Chicken Meatballs').first().isVisible(),
+  'seeded porcini sugo shows on Cook screen',
+);
+ok((await page.locator('.badge').count()) >= 1, 'saved recipe carries a "Yours" badge');
+await snap('home-recipes');
+
+// add a new recipe via the form
+const yourBefore = await page.locator('article.recipe').count();
+await page.getByRole('link', { name: '+ Add a recipe' }).click();
+await page.waitForURL('**/recipes/new');
+await page.getByLabel('Title').fill('Test Miso Noodles');
+await page.getByLabel('Ingredients — one per line').fill('rice noodles\nmiso\nscallion');
+await page.getByRole('button', { name: 'Save to Cook screen' }).click();
+await page.waitForURL(/\/$|\/$/);
+await page.waitForSelector('.recipe');
+await page.waitForTimeout(150);
+const yourAfter = await page.locator('article.recipe').count();
+ok(yourAfter === yourBefore + 1, `saving added a card (${yourBefore} -> ${yourAfter})`);
+ok(
+  await page.getByText('Test Miso Noodles').first().isVisible(),
+  'new saved recipe appears on Cook screen',
+);
+// persists across reload
+await page.reload({ waitUntil: 'load' });
+await page.waitForSelector('.recipe');
+ok(
+  await page.getByText('Test Miso Noodles').first().isVisible(),
+  'saved recipe persists across reload',
+);
+
 await browser.close();
 console.log(failures === 0 ? '\nALL PASS' : `\n${failures} FAILURE(S)`);
 process.exit(failures === 0 ? 0 : 1);

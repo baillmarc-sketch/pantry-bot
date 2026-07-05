@@ -105,7 +105,7 @@ export function rankRecipes(
         use_soon_items: useSoon,
         palate_match_score: Number(palate.toFixed(3)),
         leftover_score: leftover,
-        finishing_move: finishingMoves(recipe)[0]!,
+        finishing_move: recipe.finishing_move ?? finishingMoves(recipe)[0]!,
         dairy_warnings: dairy.warnings,
         dairy_swaps: dairy.swaps,
         score: Number(score.toFixed(3)),

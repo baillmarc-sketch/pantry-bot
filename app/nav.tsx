@@ -7,7 +7,7 @@ const ITEMS = [
   { href: '/', label: 'Cook', ico: '🍳', live: true },
   { href: '/inventory', label: 'Pantry', ico: '🧺', live: true },
   { href: '/scan', label: 'Scan', ico: '📷', live: true },
-  { href: '/recipes', label: 'Recipes', ico: '📖', live: false },
+  { href: '/likes', label: 'Likes', ico: '❤️', live: true },
   { href: '/list', label: 'List', ico: '🛒', live: false },
 ];
 

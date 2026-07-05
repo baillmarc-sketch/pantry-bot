@@ -46,6 +46,10 @@ export interface InventoryItem {
   /** 0..1 — how sure we are about the parse/metadata. null when not applicable. */
   confidence_score?: number | null;
   notes?: string | null;
+  /** On the household "things we like" list. Survives running out (product, not stock). */
+  liked?: boolean;
+  /** Free-form searchable tags (brand line, prep notes, aliases). */
+  tags?: string[] | null;
   created_at: string;
   updated_at: string;
 }

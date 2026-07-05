@@ -114,6 +114,18 @@
       "shelf_life_days": { "fridge": 4, "freezer": 90, "pantry": null },
       "after_opened_days": null,
       "note": "General cooked-leftover guidance: ~3-4 days refrigerated."
+    },
+    "razor clams": {
+      "category": "tinned fish",
+      "shelf_life_days": { "fridge": 2, "freezer": null, "pantry": 1460 },
+      "after_opened_days": 2,
+      "note": "Tinned seafood (conserva) — shelf-stable unopened for years; refrigerate and use within ~2 days once opened."
+    },
+    "snack crackers": {
+      "category": "crackers",
+      "shelf_life_days": { "fridge": null, "freezer": null, "pantry": 180 },
+      "after_opened_days": 21,
+      "note": "Crackers keep for months sealed; best within a few weeks once opened."
     }
   }
 }

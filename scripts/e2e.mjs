@@ -71,6 +71,23 @@ await page.locator('.recipe').first().getByRole('button', { name: 'Cooked this' 
 await page.waitForTimeout(150);
 ok(await page.getByText(/Cooked /).first().isVisible(), 'cooking shows confirmation message');
 
+// 7. Likes: both scanned items present, categorized, searchable
+await page.goto(`${base}/likes`, { waitUntil: 'load' });
+await page.waitForSelector('.inv-item');
+const likeCount = await page.locator('.inv-item').count();
+ok(likeCount >= 2, `likes shows ${likeCount} saved item(s)`);
+ok(await page.getByText('Porto-Muíños').first().isVisible(), 'razor clams (brand) shows on likes');
+ok(await page.getByText(/Tinned fish|tinned fish/).first().isVisible(), 'tinned fish category present');
+await snap('likes');
+
+// search narrows to the dill pickle crackers
+await page.getByLabel('Search things we like').fill('dill');
+await page.waitForTimeout(150);
+const dillRows = await page.locator('.inv-item').count();
+ok(dillRows === 1, `search "dill" narrows to ${dillRows} row (expected 1)`);
+ok(await page.getByText(/Dill Pickle/).first().isVisible(), 'dill pickle crackers matched by tag');
+await snap('likes-search');
+
 await browser.close();
 console.log(failures === 0 ? '\nALL PASS' : `\n${failures} FAILURE(S)`);
 process.exit(failures === 0 ? 0 : 1);

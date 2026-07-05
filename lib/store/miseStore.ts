@@ -13,6 +13,7 @@ import {
   consumeEvent,
   discardEvent,
   cookEvents,
+  defaultCtx,
   type ConfirmedItem,
 } from './actions';
 
@@ -133,6 +134,30 @@ export function cook(recipe: Pick<RecipeInput, 'ingredients'>, present: Inventor
   const events = cookEvents(recipe, present, HOUSEHOLD, state.actor);
   commit({ ...state, events: [...state.events, ...events] });
   return { consumed: events.length };
+}
+
+/** Toggle an item on/off the household "things we like" list. Metadata + audit event. */
+export function toggleLike(itemId: string) {
+  const now = defaultCtx.now();
+  let nowLiked = false;
+  const items = state.items.map((it) => {
+    if (it.id !== itemId) return it;
+    nowLiked = !it.liked;
+    return { ...it, liked: nowLiked, updated_at: now };
+  });
+  const event: InventoryEvent = {
+    id: defaultCtx.id(),
+    item_id: itemId,
+    household_id: HOUSEHOLD,
+    event_type: 'edited',
+    quantity_change: 0,
+    reason: nowLiked ? 'liked' : 'unliked',
+    source: 'manual',
+    actor: state.actor,
+    created_at: now,
+  };
+  commit({ ...state, items, events: [...state.events, event] });
+  return { liked: nowLiked };
 }
 
 export function resetDemo() {

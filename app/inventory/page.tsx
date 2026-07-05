@@ -1,9 +1,11 @@
 'use client';
 
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Header, StatusChip } from '../ui';
+import { Header, StatusChip, LikeButton } from '../ui';
 import { Toolbar } from '../controls';
 import { useMise } from '../../lib/store/useMise';
+import { searchItems } from '../../lib/core/search';
 
 const LOCATION_LABEL: Record<string, string> = {
   fridge: 'Fridge',
@@ -15,7 +17,10 @@ const LOCATION_LABEL: Record<string, string> = {
 };
 
 export default function InventoryPage() {
-  const { snapshot, consume, discard } = useMise();
+  const { snapshot, consume, discard, toggleLike } = useMise();
+  const [q, setQ] = useState('');
+
+  const items = useMemo(() => searchItems(snapshot, q), [snapshot, q]);
 
   return (
     <>
@@ -27,13 +32,25 @@ export default function InventoryPage() {
       <div className="screen">
         <Toolbar />
 
+        <input
+          type="text"
+          inputMode="search"
+          placeholder="Search — “tinned”, “fridge”, “clams”…"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          aria-label="Search the pantry"
+        />
+
         {snapshot.length === 0 && (
           <div className="empty">
             Nothing on hand. <Link href="/scan">Scan a receipt</Link> to stock up.
           </div>
         )}
+        {snapshot.length > 0 && items.length === 0 && (
+          <div className="empty">Nothing matches “{q}”.</div>
+        )}
 
-        {snapshot.map((item) => {
+        {items.map((item) => {
           const d = item.spoilage.days_left;
           const daysText =
             d === null
@@ -50,7 +67,7 @@ export default function InventoryPage() {
                 <div className="detail">
                   {item.quantity_remaining} {item.unit}
                   {item.quantity_remaining === 1 ? '' : 's'} ·{' '}
-                  {LOCATION_LABEL[item.location] ?? item.location}
+                  {LOCATION_LABEL[item.location] ?? item.location} · {item.category}
                   {item.opened_date ? ' · opened' : ''}
                 </div>
                 <div className="row-actions">
@@ -70,9 +87,16 @@ export default function InventoryPage() {
                   </button>
                 </div>
               </div>
-              <div className="right">
-                <StatusChip status={item.spoilage.status} />
-                <div className="days">{daysText}</div>
+              <div className="right" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div>
+                  <StatusChip status={item.spoilage.status} />
+                  <div className="days">{daysText}</div>
+                </div>
+                <LikeButton
+                  liked={!!item.liked}
+                  onToggle={() => toggleLike(item.id)}
+                  label={item.display_name}
+                />
               </div>
             </div>
           );

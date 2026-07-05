@@ -23,6 +23,11 @@ interface SeedSpec {
   purchasedDaysAgo: number;
   openedDaysAgo?: number;
   qty: number;
+  brand?: string;
+  package_size?: string;
+  liked?: boolean;
+  tags?: string[];
+  notes?: string;
 }
 
 const SPECS: SeedSpec[] = [
@@ -42,6 +47,36 @@ const SPECS: SeedSpec[] = [
   { id: 'i-cheese', normalized_name: 'aged cheese', display_name: 'Aged gouda', category: 'dairy_eggs', unit: 'wedge', location: 'fridge', purchasedDaysAgo: 20, openedDaysAgo: 19, qty: 1 },
   // fresh herbs: short-lived -> "past estimate"
   { id: 'i-herbs', normalized_name: 'fresh herbs', display_name: 'Cilantro', category: 'produce', unit: 'bunch', location: 'fridge', purchasedDaysAgo: 7, qty: 1 },
+  // --- Things we like (scanned from labels) ---
+  {
+    id: 'i-razor-clams',
+    normalized_name: 'razor clams',
+    display_name: 'Razor Clams in Garlic Sauce with Sea Spaghetti',
+    category: 'tinned fish',
+    unit: 'tin',
+    location: 'pantry',
+    purchasedDaysAgo: 10,
+    qty: 1,
+    brand: 'Porto-Muíños',
+    package_size: '3.2 oz (90g)',
+    liked: true,
+    tags: ['tinned fish', 'conservas', 'sea vegetables', 'razor clams', 'garlic sauce', 'sea spaghetti', 'seaweed', 'spanish', 'galician'],
+    notes: 'Scanned from label. Porto-Muíños "Sea Vegetables" line. Razor clams in garlic sauce with sea spaghetti (seaweed).',
+  },
+  {
+    id: 'i-dill-crackers',
+    normalized_name: 'snack crackers',
+    display_name: 'Snacker Crackers — Dill Pickle',
+    category: 'crackers',
+    unit: 'tub',
+    location: 'pantry',
+    purchasedDaysAgo: 8,
+    qty: 1,
+    package_size: '8.5 oz (241g)',
+    liked: true,
+    tags: ['crackers', 'snack', 'dill pickle', 'pickle', 'the perfect snack cracker'],
+    notes: 'Scanned from label. "The Perfect Snack Cracker," dill pickle flavor.',
+  },
 ];
 
 export const SEED_ITEMS: InventoryItem[] = SPECS.map((s) => ({
@@ -52,13 +87,15 @@ export const SEED_ITEMS: InventoryItem[] = SPECS.map((s) => ({
   category: s.category,
   unit: s.unit,
   location: s.location,
-  brand: null,
-  package_size: null,
+  brand: s.brand ?? null,
+  package_size: s.package_size ?? null,
   purchase_date: isoDate(s.purchasedDaysAgo),
   opened_date: s.openedDaysAgo !== undefined ? isoDate(s.openedDaysAgo) : null,
   source: 'manual',
   confidence_score: 1,
-  notes: null,
+  notes: s.notes ?? null,
+  liked: s.liked ?? false,
+  tags: s.tags ?? null,
   created_at: isoTime(s.purchasedDaysAgo),
   updated_at: isoTime(s.purchasedDaysAgo),
 }));

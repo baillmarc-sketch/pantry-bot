@@ -303,6 +303,20 @@ label { font-size: 13px; font-weight: 700; color: var(--ink-soft); }
 
 .empty { text-align: center; color: var(--ink-soft); padding: 40px 16px; }
 
+.heart {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 26px;
+  line-height: 1;
+  min-height: 44px;
+  min-width: 44px;
+  color: var(--ink-soft);
+  transition: transform 0.08s ease, color 0.15s ease;
+}
+.heart.on { color: var(--chili); }
+.heart:active { transform: scale(1.2); }
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }

@@ -37,7 +37,8 @@ describe('parseRecipeForm', () => {
 
 describe('ranker honors a saved recipe finishing move', () => {
   it('uses the recipe.finishing_move over the taste guess', () => {
-    const [ranked] = rankRecipes(SAVED_RECIPES_SEED, []);
+    const food = SAVED_RECIPES_SEED.filter((r) => r.kind !== 'cocktail');
+    const [ranked] = rankRecipes(food, []);
     expect(ranked!.finishing_move).toBe('chili crisp + scallion');
     expect(ranked!.saved).toBe(true);
   });

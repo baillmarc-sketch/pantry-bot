@@ -126,6 +126,46 @@ ok(
   'saved recipe persists across reload',
 );
 
+// 9. Bar: cocktails ranked shakeable-first; bottles add + track
+await page.goto(`${base}/bar`, { waitUntil: 'load' });
+await page.waitForSelector('.recipe');
+ok(await page.getByText('The bar').first().isVisible(), 'Bar screen renders');
+ok(
+  await page.getByText('Hugo Spritz').first().isVisible(),
+  "Anna's Hugo Spritz is in the bar",
+);
+ok(
+  (await page.getByText('Shakeable now').count()) >= 1,
+  'at least one cocktail is shakeable now',
+);
+ok(
+  await page.getByText('Need to buy:').first().isVisible(),
+  'a non-shakeable cocktail flags missing bottles (e.g. Negroni)',
+);
+await snap('bar-cocktails');
+
+// Bottles tab: starter bar present, and add a bottle
+await page.getByRole('tab', { name: 'Bottles' }).click();
+await page.waitForSelector('.inv-item');
+ok(await page.getByText('Blanco tequila').first().isVisible(), 'starter bar shows Blanco tequila');
+const bottlesBefore = await page.locator('.inv-item').count();
+await page.getByRole('button', { name: '+ Add a bottle' }).click();
+await page.getByLabel('Bottle').fill('Rye whiskey');
+await page.getByRole('button', { name: 'Add bottle' }).click();
+await page.waitForTimeout(150);
+const bottlesAfter = await page.locator('.inv-item').count();
+ok(bottlesAfter === bottlesBefore + 1, `adding a bottle added a row (${bottlesBefore} -> ${bottlesAfter})`);
+ok(await page.getByText('Rye whiskey').first().isVisible(), 'new bottle appears in the bar');
+await snap('bar-bottles');
+
+// Kitchen Pantry must NOT list bar bottles
+await page.goto(`${base}/inventory`, { waitUntil: 'load' });
+await page.waitForSelector('.inv-item');
+ok(
+  (await page.getByText('Blanco tequila').count()) === 0,
+  'bar bottles do not leak into the kitchen Pantry',
+);
+
 await browser.close();
 console.log(failures === 0 ? '\nALL PASS' : `\n${failures} FAILURE(S)`);
 process.exit(failures === 0 ? 0 : 1);

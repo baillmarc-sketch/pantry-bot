@@ -62,6 +62,7 @@ export function ingestConfirmed(
   household_id: string,
   actor: Actor,
   ctx: Ctx = defaultCtx,
+  source: EventSource = 'receipt',
 ): { newItems: InventoryItem[]; events: InventoryEvent[] } {
   const newItems: InventoryItem[] = [];
   const events: InventoryEvent[] = [];
@@ -74,7 +75,7 @@ export function ingestConfirmed(
     const existingId = index.get(key);
     if (existingId) {
       events.push(
-        makeEvent(existingId, household_id, 'restocked', c.quantity, actor, 'receipt', ctx, 'scan restock'),
+        makeEvent(existingId, household_id, 'restocked', c.quantity, actor, source, ctx, 'restock'),
       );
       continue;
     }
@@ -91,7 +92,7 @@ export function ingestConfirmed(
       package_size: c.package_size ?? null,
       purchase_date: now.slice(0, 10),
       opened_date: null,
-      source: 'receipt',
+      source,
       confidence_score: c.confidence ?? null,
       notes: null,
       created_at: now,
@@ -99,7 +100,7 @@ export function ingestConfirmed(
     };
     newItems.push(item);
     index.set(key, item.id);
-    events.push(makeEvent(item.id, household_id, 'added', c.quantity, actor, item.source, ctx, 'scan add'));
+    events.push(makeEvent(item.id, household_id, 'added', c.quantity, actor, item.source, ctx, 'add'));
   }
 
   return { newItems, events };

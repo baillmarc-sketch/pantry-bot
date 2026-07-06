@@ -13,6 +13,8 @@ and [`BUILDER-PROFILE.md`](BUILDER-PROFILE.md) for the full intent.
 | **0** | Framework-free core engine + data catalogs + tests | ✅ done |
 | **0** | Next.js + "Warm Market Stall" + PWA shell, Home & Inventory | ✅ done · live on Vercel |
 | **1** | Core loop on `MockAIProvider`: scan → confirm → inventory → cook, local-first persistence | ✅ done |
+| **1** | Likes list + search + categories; save-your-own recipes on the Cook screen | ✅ done |
+| **1** | Bar: bottle tracking + cocktail book with "shakeable now" | ✅ done |
 | 2 | Real `AnthropicAIProvider` + fridge vision (propose-only) | planned |
 | 2 | Supabase + RLS for two-phone sync (replaces localStorage) | planned |
 | 3 | Learns your staples & weekly habits | planned |
@@ -77,9 +79,9 @@ No build config required: build `next build`, output `.next`, install `npm insta
 ### Proof (last run)
 
 ```
-Test Files  9 passed (9)
-     Tests  44 passed (44)        # vitest: unit
-19/19 PASS  ALL PASS              # scripts/e2e.mjs: headless loop
+Test Files  10 passed (10)
+     Tests  50 passed (50)        # vitest: unit
+25/25 PASS  ALL PASS              # scripts/e2e.mjs: headless loop
 ```
 Unit covers: event-sourced derivation incl. two-phone reconciliation & no-negative/no-silent-loss;
 spoilage transitions (fresh/soon/today/past/unknown) + conservative fallbacks + opened-clock;

@@ -77,6 +77,23 @@ const SPECS: SeedSpec[] = [
     tags: ['crackers', 'snack', 'dill pickle', 'pickle', 'the perfect snack cracker'],
     notes: 'Scanned from label. "The Perfect Snack Cracker," dill pickle flavor.',
   },
+
+  // --- Bar: demo starter bottles (location 'bar'). Edit to match your real bar. ---
+  { id: 'bar-tequila', normalized_name: 'blanco tequila', display_name: 'Blanco tequila', category: 'spirit', unit: 'bottle', location: 'bar', purchasedDaysAgo: 40, qty: 1, tags: ['agave', 'margarita'] },
+  { id: 'bar-mezcal', normalized_name: 'mezcal', display_name: 'Mezcal', category: 'spirit', unit: 'bottle', location: 'bar', purchasedDaysAgo: 40, qty: 1, tags: ['agave', 'smoky', 'margarita'] },
+  { id: 'bar-bourbon', normalized_name: 'bourbon', display_name: 'Bourbon', category: 'spirit', unit: 'bottle', location: 'bar', purchasedDaysAgo: 60, qty: 1, tags: ['whiskey'] },
+  { id: 'bar-aperol', normalized_name: 'aperol', display_name: 'Aperol', category: 'liqueur', unit: 'bottle', location: 'bar', purchasedDaysAgo: 30, qty: 1, tags: ['bitter', 'spritz'] },
+  { id: 'bar-nonino', normalized_name: 'amaro nonino', display_name: 'Amaro Nonino', category: 'amaro', unit: 'bottle', location: 'bar', purchasedDaysAgo: 30, qty: 1, tags: ['amaro'] },
+  { id: 'bar-orange', normalized_name: 'orange liqueur', display_name: 'Cointreau (orange liqueur)', category: 'liqueur', unit: 'bottle', location: 'bar', purchasedDaysAgo: 50, qty: 1, tags: ['triple sec', 'margarita'] },
+  { id: 'bar-elderflower', normalized_name: 'elderflower liqueur', display_name: 'Elderflower liqueur', category: 'liqueur', unit: 'bottle', location: 'bar', purchasedDaysAgo: 25, qty: 1, tags: ['st germain', 'floral'] },
+  { id: 'bar-prosecco', normalized_name: 'prosecco', display_name: 'Prosecco', category: 'wine', unit: 'bottle', location: 'bar', purchasedDaysAgo: 3, openedDaysAgo: 1, qty: 1, tags: ['sparkling', 'spritz'] },
+  { id: 'bar-soda', normalized_name: 'soda water', display_name: 'Soda water', category: 'mixer', unit: 'bottle', location: 'bar', purchasedDaysAgo: 6, qty: 1 },
+  { id: 'bar-simple', normalized_name: 'simple syrup', display_name: 'Simple syrup', category: 'syrup', unit: 'bottle', location: 'bar', purchasedDaysAgo: 10, openedDaysAgo: 10, qty: 1 },
+  { id: 'bar-agave', normalized_name: 'agave syrup', display_name: 'Agave syrup', category: 'syrup', unit: 'bottle', location: 'bar', purchasedDaysAgo: 20, qty: 1 },
+  { id: 'bar-ango', normalized_name: 'angostura bitters', display_name: 'Angostura bitters', category: 'bitters', unit: 'bottle', location: 'bar', purchasedDaysAgo: 120, qty: 1 },
+  { id: 'bar-lime', normalized_name: 'lime', display_name: 'Limes', category: 'juice', unit: 'each', location: 'bar', purchasedDaysAgo: 2, qty: 4, tags: ['citrus'] },
+  { id: 'bar-lemon', normalized_name: 'lemon', display_name: 'Lemons', category: 'juice', unit: 'each', location: 'bar', purchasedDaysAgo: 2, qty: 3, tags: ['citrus'] },
+  { id: 'bar-mint', normalized_name: 'mint', display_name: 'Mint', category: 'garnish', unit: 'bunch', location: 'bar', purchasedDaysAgo: 2, qty: 1, tags: ['herb'] },
 ];
 
 export const SEED_ITEMS: InventoryItem[] = SPECS.map((s) => ({

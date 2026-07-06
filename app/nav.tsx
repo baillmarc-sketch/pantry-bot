@@ -8,7 +8,7 @@ const ITEMS = [
   { href: '/inventory', label: 'Pantry', ico: '🧺', live: true },
   { href: '/scan', label: 'Scan', ico: '📷', live: true },
   { href: '/likes', label: 'Likes', ico: '❤️', live: true },
-  { href: '/list', label: 'List', ico: '🛒', live: false },
+  { href: '/bar', label: 'Bar', ico: '🍸', live: true },
 ];
 
 export function NavBar() {

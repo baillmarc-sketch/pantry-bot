@@ -7,6 +7,7 @@ export type Location =
   | 'pantry'
   | 'spice'
   | 'counter'
+  | 'bar'
   | 'unknown';
 
 export type Actor = 'marc' | 'anna' | 'system';
@@ -99,4 +100,12 @@ export interface RecipeInput {
   notes?: string;
   /** True for recipes the household saved themselves (vs. generated). */
   saved?: boolean;
+  /** 'food' (default) or 'cocktail' — routes it to the Kitchen or the Bar. */
+  kind?: 'food' | 'cocktail';
+  /** Cocktail extras. */
+  glass?: string;
+  method?: string;
+  garnish?: string;
+  /** Whose favorite it is, for the Bar. */
+  favorite_of?: 'marc' | 'anna' | 'both';
 }

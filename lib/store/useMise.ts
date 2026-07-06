@@ -6,6 +6,7 @@ import {
   useMiseState,
   setActor,
   applyScan,
+  addBottle,
   consume,
   discard,
   cook,
@@ -14,10 +15,11 @@ import {
   removeRecipe,
   resetDemo,
 } from './miseStore';
-import { deriveInventory } from '../core/inventory';
+import { deriveInventory, presentItems, type DerivedItem } from '../core/inventory';
 import { spoilageStatus } from '../core/spoilage';
 import { pantrySnapshot, toPantryEntries, type PantryItem } from '../core/snapshot';
 import { rankRecipes, type RankedRecipe } from '../core/ranker';
+import { rankCocktails, type RankedCocktail } from '../core/bar';
 import { mockRecipes } from '../ai/mock';
 
 export interface MiseView {
@@ -26,9 +28,12 @@ export interface MiseView {
   likes: PantryItem[];
   recipes: RankedRecipe[];
   yourRecipes: RankedRecipe[];
+  barBottles: DerivedItem[];
+  cocktails: RankedCocktail[];
   today: string;
   setActor: typeof setActor;
   applyScan: typeof applyScan;
+  addBottle: typeof addBottle;
   consume: typeof consume;
   discard: typeof discard;
   toggleLike: typeof toggleLike;
@@ -46,13 +51,22 @@ export function useMise(recipeLimit = 5): MiseView {
   const { items, events, actor, savedRecipes } = useMiseState();
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
 
+  const present = useMemo(
+    () => presentItems(deriveInventory(items, events)),
+    [items, events],
+  );
+
+  // Kitchen only — the bar lives on its own screen.
   const snapshot = useMemo(
-    () => pantrySnapshot(items, events, today),
+    () => pantrySnapshot(items, events, today).filter((s) => s.location !== 'bar'),
     [items, events, today],
   );
 
-  // Likes span the whole catalog (a product you like even when you're out of it),
-  // so derive from ALL items, not just what's present.
+  const barBottles = useMemo(() => present.filter((d) => d.location === 'bar'), [present]);
+
+  // Everything on hand (bar bottles + kitchen citrus, etc.) for "shakeable now".
+  const onHand = useMemo(() => new Set(present.map((d) => d.normalized_name)), [present]);
+
   const likes = useMemo(
     () =>
       deriveInventory(items, events)
@@ -68,11 +82,15 @@ export function useMise(recipeLimit = 5): MiseView {
     [entries, recipeLimit],
   );
 
-  // Your saved recipes, ranked against the current pantry so each card knows
-  // what you've got and what's still needed. Always shown (not top-N capped).
+  // Food-only saved recipes on the Cook screen; cocktails route to the Bar.
   const yourRecipes = useMemo(
-    () => rankRecipes(savedRecipes, entries),
+    () => rankRecipes(savedRecipes.filter((r) => r.kind !== 'cocktail'), entries),
     [savedRecipes, entries],
+  );
+
+  const cocktails = useMemo(
+    () => rankCocktails(savedRecipes.filter((r) => r.kind === 'cocktail'), onHand),
+    [savedRecipes, onHand],
   );
 
   return {
@@ -81,9 +99,12 @@ export function useMise(recipeLimit = 5): MiseView {
     likes,
     recipes,
     yourRecipes,
+    barBottles,
+    cocktails,
     today,
     setActor,
     applyScan,
+    addBottle,
     consume,
     discard,
     toggleLike,

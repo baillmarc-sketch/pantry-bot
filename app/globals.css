@@ -330,6 +330,18 @@ label { font-size: 13px; font-weight: 700; color: var(--ink-soft); }
 .heart.on { color: var(--chili); }
 .heart:active { transform: scale(1.2); }
 
+/* cocktail spec list */
+ul.spec { list-style: none; margin: 12px 0 0; padding: 0; }
+ul.spec li {
+  display: flex; gap: 12px; align-items: baseline;
+  padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 15px;
+}
+ul.spec li:last-child { border-bottom: 0; }
+ul.spec .amt {
+  flex: 0 0 84px; font-weight: 800; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }

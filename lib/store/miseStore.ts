@@ -17,6 +17,7 @@ import {
   defaultCtx,
   type ConfirmedItem,
 } from './actions';
+import { normalizeName } from '../core/normalize';
 
 export const HOUSEHOLD = 'h-marc-anna';
 
@@ -137,6 +138,33 @@ export function applyScan(confirmed: ConfirmedItem[]) {
     events: [...state.events, ...events],
   });
   return { added: events.length };
+}
+
+/** Add a bottle to the bar (location 'bar'). Merges into an existing bottle by name. */
+export function addBottle(input: { display_name: string; category: string; package_size?: string }) {
+  const confirmed: ConfirmedItem = {
+    normalized_name: normalizeName(input.display_name).name,
+    display_name: input.display_name.trim(),
+    category: input.category,
+    unit: 'bottle',
+    quantity: 1,
+    location: 'bar',
+    package_size: input.package_size?.trim() || null,
+    confidence: 1,
+  };
+  const { newItems, events } = ingestConfirmed(
+    state.items,
+    [confirmed],
+    HOUSEHOLD,
+    state.actor,
+    defaultCtx,
+    'manual',
+  );
+  commit({
+    ...state,
+    items: [...state.items, ...newItems],
+    events: [...state.events, ...events],
+  });
 }
 
 export function consume(item: InventoryItem, qty = 1) {

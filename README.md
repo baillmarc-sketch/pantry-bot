@@ -50,6 +50,14 @@ lib/
   unknown storage resolve to **"Confirm status,"** not "fresh," and assume the **shorter**
   shelf life. The app never renders "safe to eat."
 
+## Security
+
+Local-first and backend-less by design, so the surface is small: no secrets in the repo or
+bundle, no network calls, no `dangerouslySetInnerHTML`/`eval`, all user input rendered as escaped
+React text, and every `localStorage` read `try/catch`-guarded. Production ships tight HTTP headers
+(CSP, HSTS, `X-Frame-Options: DENY`, `nosniff`, `Permissions-Policy`) and `npm audit` is clean.
+Full posture and the Firebase + Google-SSO hardening checklist: [`docs/SECURITY.md`](docs/SECURITY.md).
+
 ## Develop
 
 ```bash

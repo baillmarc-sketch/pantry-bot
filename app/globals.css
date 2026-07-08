@@ -330,6 +330,19 @@ label { font-size: 13px; font-weight: 700; color: var(--ink-soft); }
 .useup:last-child { border-bottom: 0; }
 .useup .muted { color: var(--ink-soft); font-weight: 600; }
 
+.bestby { margin-top: 8px; }
+.bestby summary {
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  list-style: none;
+}
+.bestby summary::-webkit-details-marker { display: none; }
+.bestby summary::before { content: '📅 '; }
+.bestby-body { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+.bestby-body input[type='date'] { width: auto; padding: 8px 10px; }
+
 .heart {
   background: none;
   border: 0;

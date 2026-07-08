@@ -83,6 +83,23 @@ describe('spoilage (guidance, conservative, never asserts safe)', () => {
     expect(r.status).toBe('soon');
   });
 
+  it('an explicit best-by date overrides the shelf-life table (best-known info wins)', () => {
+    // cucumber bought today would normally read "fresh"; a best-by tomorrow wins.
+    const r = spoilageStatus(
+      it_('2026-06-21', { purchase_date: '2026-06-21', best_by: '2026-06-22' }),
+      TODAY,
+    );
+    expect(r.basis).toBe('explicit');
+    expect(r.conservative).toBe(false);
+    expect(r.status).toBe('today');
+    expect(r.days_left).toBe(1);
+  });
+
+  it('a past best-by reads past', () => {
+    const r = spoilageStatus(it_('2026-06-21', { best_by: '2026-06-19' }), TODAY);
+    expect(r.status).toBe('past');
+  });
+
   it('every status has a color-independent glyph + label', () => {
     for (const meta of Object.values(STATUS_META)) {
       expect(meta.glyph.length).toBeGreaterThan(0);

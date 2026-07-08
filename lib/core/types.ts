@@ -43,6 +43,8 @@ export interface InventoryItem {
   purchase_date?: string | null;
   /** ISO date (YYYY-MM-DD). Triggers the after-opened clock. */
   opened_date?: string | null;
+  /** ISO date (YYYY-MM-DD). A label/user "best by" date — trusted OVER the shelf-life table. */
+  best_by?: string | null;
   source: EventSource;
   /** 0..1 — how sure we are about the parse/metadata. null when not applicable. */
   confidence_score?: number | null;

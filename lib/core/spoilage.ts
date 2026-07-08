@@ -41,7 +41,7 @@ export interface SpoilageResult {
   days_left: number | null;
   /** ISO date (YYYY-MM-DD) or null. */
   best_before: string | null;
-  basis: 'opened+shelflife' | 'purchase+shelflife' | 'none';
+  basis: 'explicit' | 'opened+shelflife' | 'purchase+shelflife' | 'none';
   /** True when we assumed worst-case because storage/dates were missing. */
   conservative: boolean;
   note?: string;
@@ -85,10 +85,28 @@ function lookupEntry(normalized_name: string): ShelfLifeEntry | null {
 export function spoilageStatus(
   item: Pick<
     InventoryItem,
-    'normalized_name' | 'location' | 'purchase_date' | 'opened_date' | 'created_at'
+    'normalized_name' | 'location' | 'purchase_date' | 'opened_date' | 'created_at' | 'best_by'
   >,
   todayIso: string,
 ): SpoilageResult {
+  // Best-known info wins: an explicit label / user "best by" date overrides the table.
+  if (item.best_by) {
+    const daysLeft = daysBetween(todayIso, item.best_by);
+    let status: SpoilageStatus;
+    if (daysLeft < 0) status = 'past';
+    else if (daysLeft <= 1) status = 'today';
+    else if (daysLeft <= 3) status = 'soon';
+    else status = 'fresh';
+    return {
+      status,
+      days_left: daysLeft,
+      best_before: item.best_by.slice(0, 10),
+      basis: 'explicit',
+      conservative: false,
+      note: 'Using the best-by date you set.',
+    };
+  }
+
   const entry = lookupEntry(item.normalized_name);
   if (!entry) {
     return {

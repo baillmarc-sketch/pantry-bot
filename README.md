@@ -15,6 +15,8 @@ and [`BUILDER-PROFILE.md`](BUILDER-PROFILE.md) for the full intent.
 | **1** | Core loop on `MockAIProvider`: scan → confirm → inventory → cook, local-first persistence | ✅ done |
 | **1** | Likes list + search + categories; save-your-own recipes on the Cook screen | ✅ done |
 | **1** | Bar: bottle tracking + cocktail book with "shakeable now" | ✅ done |
+| **1** | Daily "use it up" + freeze tips; best-by override; bigger recipe/drink catalogs | ✅ done |
+| **2** | Firebase + Google-SSO port (rules, env, guide staged) · AI vision adapter | groundwork ready |
 | 2 | Real `AnthropicAIProvider` + fridge vision (propose-only) | planned |
 | 2 | Supabase + RLS for two-phone sync (replaces localStorage) | planned |
 | 3 | Learns your staples & weekly habits | planned |
@@ -88,7 +90,7 @@ No build config required: build `next build`, output `.next`, install `npm insta
 
 ```
 Test Files  11 passed (11)
-     Tests  55 passed (55)        # vitest: unit
+     Tests  58 passed (58)        # vitest: unit
 25/25 PASS  ALL PASS              # scripts/e2e.mjs: headless loop
 ```
 Unit covers: event-sourced derivation incl. two-phone reconciliation & no-negative/no-silent-loss;

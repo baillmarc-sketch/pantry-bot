@@ -1,0 +1,63 @@
+rules_version = '2';
+
+// Mise — Firestore security rules (RLS-equivalent). Deny by default; every path
+// is scoped to a household the signed-in user is a MEMBER of. Google SSO alone
+// grants nothing — you must be a member. See docs/PORT-FIREBASE.md + docs/SECURITY.md.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // Membership is the lock: a user can only touch a household they belong to.
+    function isMember(hid) {
+      return signedIn()
+        && exists(/databases/$(database)/documents/households/$(hid)/members/$(request.auth.uid));
+    }
+
+    match /households/{hid} {
+      allow read, update: if isMember(hid);
+      allow delete: if false; // never delete a household from the client
+
+      // Members subcollection. A member can see the roster; adding another member
+      // (the invite) is a member-only action; a user may remove only themselves.
+      // First-member bootstrap is done server-side (Admin SDK / blocking function),
+      // NOT from the client — see PORT-FIREBASE.md.
+      match /members/{uid} {
+        allow read: if isMember(hid);
+        allow create: if isMember(hid);
+        allow delete: if isMember(hid) && uid == request.auth.uid;
+        allow update: if false;
+      }
+
+      // Inventory items — members read/write; writes must carry the right household_id.
+      match /items/{itemId} {
+        allow read: if isMember(hid);
+        allow create, update: if isMember(hid)
+          && request.resource.data.household_id == hid;
+        allow delete: if isMember(hid);
+      }
+
+      // Event log is APPEND-ONLY — never editable or deletable (matches the engine).
+      match /events/{eventId} {
+        allow read: if isMember(hid);
+        allow create: if isMember(hid)
+          && request.resource.data.household_id == hid;
+        allow update, delete: if false;
+      }
+
+      // Saved recipes + cocktails.
+      match /recipes/{recipeId} {
+        allow read: if isMember(hid);
+        allow create, update, delete: if isMember(hid);
+      }
+    }
+
+    // Default deny — anything not matched above is forbidden.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

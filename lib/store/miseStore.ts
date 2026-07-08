@@ -181,6 +181,26 @@ export function cook(recipe: Pick<RecipeInput, 'ingredients'>, present: Inventor
   return { consumed: events.length };
 }
 
+/** Set (or clear) an explicit best-by date on an item — trusted over the shelf-life table. */
+export function setBestBy(itemId: string, bestByIso: string | null) {
+  const now = defaultCtx.now();
+  const items = state.items.map((it) =>
+    it.id === itemId ? { ...it, best_by: bestByIso, updated_at: now } : it,
+  );
+  const event: InventoryEvent = {
+    id: defaultCtx.id(),
+    item_id: itemId,
+    household_id: HOUSEHOLD,
+    event_type: 'edited',
+    quantity_change: 0,
+    reason: bestByIso ? `best_by ${bestByIso}` : 'best_by cleared',
+    source: 'manual',
+    actor: state.actor,
+    created_at: now,
+  };
+  commit({ ...state, items, events: [...state.events, event] });
+}
+
 /** Toggle an item on/off the household "things we like" list. Metadata + audit event. */
 export function toggleLike(itemId: string) {
   const now = defaultCtx.now();

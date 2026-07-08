@@ -18,7 +18,7 @@ const LOCATION_LABEL: Record<string, string> = {
 };
 
 export default function InventoryPage() {
-  const { snapshot, consume, discard, toggleLike } = useMise();
+  const { snapshot, consume, discard, toggleLike, setBestBy } = useMise();
   const [q, setQ] = useState('');
 
   const items = useMemo(() => searchItems(snapshot, q), [snapshot, q]);
@@ -89,6 +89,24 @@ export default function InventoryPage() {
                     Toss
                   </button>
                 </div>
+                <details className="bestby">
+                  <summary>
+                    {item.spoilage.basis === 'explicit' ? 'Best-by date set' : 'Set a best-by date'}
+                  </summary>
+                  <div className="bestby-body">
+                    <input
+                      type="date"
+                      defaultValue={item.best_by ?? ''}
+                      aria-label={`Best-by date for ${item.display_name}`}
+                      onChange={(e) => setBestBy(item.id, e.target.value || null)}
+                    />
+                    {item.best_by && (
+                      <button className="link-btn" onClick={() => setBestBy(item.id, null)}>
+                        Clear
+                      </button>
+                    )}
+                  </div>
+                </details>
               </div>
               <div className="right" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <div>

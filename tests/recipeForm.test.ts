@@ -38,8 +38,17 @@ describe('parseRecipeForm', () => {
 describe('ranker honors a saved recipe finishing move', () => {
   it('uses the recipe.finishing_move over the taste guess', () => {
     const food = SAVED_RECIPES_SEED.filter((r) => r.kind !== 'cocktail');
-    const [ranked] = rankRecipes(food, []);
-    expect(ranked!.finishing_move).toBe('chili crisp + scallion');
-    expect(ranked!.saved).toBe(true);
+    const ranked = rankRecipes(food, []);
+    const sugo = ranked.find((r) => r.id === 'saved-porcini-sugo')!;
+    expect(sugo.finishing_move).toBe('chili crisp + scallion');
+    expect(sugo.saved).toBe(true);
+  });
+
+  it('ranker falls back to the taste-engine finishing move when none is set', () => {
+    const noFinish = rankRecipes(
+      [{ id: 'x', title: 'Soy ginger tofu', servings: 2, time_estimate: 15, ingredients: [{ name: 'tofu' }], tags: ['asian'] }],
+      [],
+    );
+    expect(noFinish[0]!.finishing_move.length).toBeGreaterThan(0);
   });
 });

@@ -11,6 +11,7 @@ import {
   discard,
   cook,
   toggleLike,
+  setBestBy,
   saveRecipe,
   removeRecipe,
   resetDemo,
@@ -37,6 +38,7 @@ export interface MiseView {
   consume: typeof consume;
   discard: typeof discard;
   toggleLike: typeof toggleLike;
+  setBestBy: typeof setBestBy;
   saveRecipe: typeof saveRecipe;
   removeRecipe: typeof removeRecipe;
   cookRecipe: (recipe: RankedRecipe) => { consumed: number };
@@ -108,6 +110,7 @@ export function useMise(recipeLimit = 5): MiseView {
     consume,
     discard,
     toggleLike,
+    setBestBy,
     saveRecipe,
     removeRecipe,
     cookRecipe: (recipe) => cook(recipe, snapshot),

@@ -6,6 +6,7 @@ import { Header, StatusChip, LikeButton } from '../ui';
 import { Toolbar } from '../controls';
 import { useMise } from '../../lib/store/useMise';
 import { searchItems } from '../../lib/core/search';
+import { freezeTip } from '../../lib/core/freeze';
 
 const LOCATION_LABEL: Record<string, string> = {
   fridge: 'Fridge',
@@ -60,6 +61,7 @@ export default function InventoryPage() {
                 : d === 0
                   ? 'best by today'
                   : `${d}d left`;
+          const freeze = freezeTip(item.normalized_name, item.location, item.spoilage.status);
           return (
             <div key={item.id} className="inv-item">
               <div style={{ flex: 1 }}>
@@ -70,6 +72,7 @@ export default function InventoryPage() {
                   {LOCATION_LABEL[item.location] ?? item.location} · {item.category}
                   {item.opened_date ? ' · opened' : ''}
                 </div>
+                {freeze.canFreeze && <div className="freeze">❄️ {freeze.text}</div>}
                 <div className="row-actions">
                   <button
                     className="btn btn-ghost btn-sm"

@@ -316,6 +316,20 @@ label { font-size: 13px; font-weight: 700; color: var(--ink-soft); }
 
 .empty { text-align: center; color: var(--ink-soft); padding: 40px 16px; }
 
+.freeze {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--amber);
+}
+.useup-card { padding: 6px 16px; }
+.useup {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.useup:last-child { border-bottom: 0; }
+.useup .muted { color: var(--ink-soft); font-weight: 600; }
+
 .heart {
   background: none;
   border: 0;

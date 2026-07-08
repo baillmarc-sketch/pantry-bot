@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Header, StatusChip } from './ui';
 import { Toolbar } from './controls';
 import { useMise } from '../lib/store/useMise';
+import { freezeTip } from '../lib/core/freeze';
 import type { RankedRecipe } from '../lib/core/ranker';
 import type { SpoilageStatus } from '../lib/core/spoilage';
 
@@ -122,17 +123,23 @@ export default function HomePage() {
           {msg}
         </p>
 
+        <div className="section-label">Today · use it up</div>
         {urgent.length > 0 ? (
-          <div className="callout">
-            <b>Using up:</b>{' '}
-            {urgent.map((u, i) => {
+          <div className="card useup-card">
+            {urgent.map((u) => {
               const d = u.spoilage.days_left ?? 0;
-              const when = d < 0 ? `${Math.abs(d)}d past` : d === 0 ? 'today' : `${d}d`;
+              const when =
+                d < 0 ? `${Math.abs(d)}d past estimate` : d === 0 ? 'best by today' : `${d}d left`;
+              const fz = freezeTip(u.normalized_name, u.location, u.spoilage.status);
               return (
-                <span key={u.id}>
-                  {i > 0 ? ' · ' : ''}
-                  {u.display_name} ({when})
-                </span>
+                <div key={u.id} className="useup">
+                  <div>
+                    <b>{u.display_name}</b> <span className="muted">· {when}</span>
+                  </div>
+                  {fz.canFreeze && (
+                    <div className="freeze">❄️ {fz.text} — if you’re not cooking it soon</div>
+                  )}
+                </div>
               );
             })}
           </div>

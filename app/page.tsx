@@ -73,6 +73,20 @@ function RecipeCard({
         </div>
       )}
 
+      {((r.steps && r.steps.length > 0) || r.notes) && (
+        <details className="method">
+          <summary>Method</summary>
+          {r.steps && r.steps.length > 0 && (
+            <ol className="method-steps">
+              {r.steps.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ol>
+          )}
+          {r.notes && <p className="method-notes">{r.notes}</p>}
+        </details>
+      )}
+
       <div className="row-actions">
         <button className="btn btn-primary btn-sm" onClick={onCook}>
           Cooked this

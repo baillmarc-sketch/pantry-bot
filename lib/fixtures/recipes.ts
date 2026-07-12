@@ -126,6 +126,27 @@ export const SAVED_RECIPES_SEED: RecipeInput[] = [
       { name: 'lemon', assumed_staple: true },
     ],
   },
+  {
+    id: 'saved-iced-roasted-sweet-potato',
+    title: 'Iced Roasted Sweet Potato',
+    servings: 1,
+    time_estimate: 120,
+    leftover_score: 0.6,
+    saved: true,
+    tags: ['side', 'vegan', 'make-ahead', 'japanese', 'yaki-imo', 'sweet potato'],
+    finishing_move: 'flaky salt (or a knob of butter)',
+    steps: [
+      'Wash and dry the sweet potato; leave the skin on.',
+      'Freeze it whole for at least 8–12 hours (overnight is easiest).',
+      "Straight from the freezer onto a baking sheet or rack — don't thaw it.",
+      'Roast at 375°F (190°C): ~90 min for medium (8–10 oz), 100–120 min for large (12–16 oz).',
+      'Done when a skewer slides in with almost no resistance, the skin is wrinkled, and dark syrupy sugars ooze from the ends.',
+      "Turn the oven off and leave it inside another 20–30 min — more starch converts to maltose, so it's noticeably sweeter.",
+    ],
+    notes:
+      'Needs an overnight freeze first. Best varieties: ★★★★★ Japanese (satsumaimo) — dense, chestnut-like, very sweet; ★★★★☆ Korean — similar, a touch less dense; ★★★☆☆ orange Beauregard/Jewel — good but softer, less dramatic. Pro tip: for yaki-imo custard texture, roast low — 300°F (150°C) for 2½–3½ hrs. The freeze step pairs especially well with the long, low roast.',
+    ingredients: [{ name: 'sweet potato' }],
+  },
 
   // --- Bar: favorites + classics (real specs) ---
   {

@@ -343,6 +343,24 @@ label { font-size: 13px; font-weight: 700; color: var(--ink-soft); }
 .bestby-body { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
 .bestby-body input[type='date'] { width: auto; padding: 8px 10px; }
 
+.method { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); }
+.method summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  list-style: none;
+}
+.method summary::-webkit-details-marker { display: none; }
+.method summary::before { content: '▸ '; }
+.method[open] summary::before { content: '▾ '; }
+ol.method-steps { margin: 12px 0 0; padding-left: 20px; }
+ol.method-steps li { margin: 8px 0; line-height: 1.5; }
+ol.method-steps li::marker { color: var(--chili); font-weight: 800; }
+.method-notes { margin: 12px 0 0; font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+
 .heart {
   background: none;
   border: 0;

@@ -98,6 +98,8 @@ export interface RecipeInput {
   tags?: string[];
   /** Explicit finishing move — overrides the taste engine's guess when set. */
   finishing_move?: string;
+  /** Ordered method steps, shown as a numbered list on the recipe card. */
+  steps?: string[];
   /** Free-form method/notes for saved (user-authored) recipes. */
   notes?: string;
   /** True for recipes the household saved themselves (vs. generated). */

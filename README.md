@@ -89,8 +89,8 @@ No build config required: build `next build`, output `.next`, install `npm insta
 ### Proof (last run)
 
 ```
-Test Files  11 passed (11)
-     Tests  58 passed (58)        # vitest: unit
+Test Files  12 passed (12)
+     Tests  60 passed (60)        # vitest: unit
 25/25 PASS  ALL PASS              # scripts/e2e.mjs: headless loop
 ```
 Unit covers: event-sourced derivation incl. two-phone reconciliation & no-negative/no-silent-loss;

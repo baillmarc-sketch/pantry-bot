@@ -186,6 +186,40 @@ export const SAVED_RECIPES_SEED: RecipeInput[] = [
       { name: 'Crostini', normalized_name: 'crostini' },
     ],
   },
+  {
+    id: 'saved-pad-see-ew',
+    title: 'Slightly Spicy Pad See Ew',
+    servings: 2,
+    time_estimate: 25,
+    leftover_score: 0.4,
+    saved: true,
+    tags: ['asian', 'thai', 'noodles', 'weeknight', 'spicy'],
+    finishing_move: 'chili vinegar (prik nam som) on the side',
+    steps: [
+      'Mix the sauce: 1½ Tbsp dark soy (color), 1 Tbsp regular soy, 1 Tbsp oyster sauce, 2 tsp sugar, optional 1 tsp fish sauce, white pepper.',
+      'Prep the noodles: separate fresh wide rice noodles (microwave 20–30s if stiff). Dried? Under-soak the widest rice sticks in warm water until pliable but still firm.',
+      'Get a wok or big skillet screaming hot with oil. Sear the thin-sliced chicken thigh until just cooked; push to the side.',
+      'Add garlic (and sliced Thai chili or a pinch of chili flakes, if using) for ~15 sec, then crack in the eggs and softly scramble.',
+      'Add the gai lan stems first (~1 min), then the leaves.',
+      'Add noodles + sauce. Toss to coat, then LEAVE THEM ALONE in spurts to catch char (wok hei) — constant stirring shreds them.',
+      'White pepper, taste. Serve with chili vinegar or chili crisp on the side so each person dials the heat.',
+    ],
+    notes:
+      'Noodles: fresh WIDE rice noodles (Thai sen yai / Cantonese ho fun), ¾–1" wide, from the fridge section — that chew is the point; dried widest rice sticks, under-soaked, in a pinch. Classic Pad See Ew is mild; keep it "slightly" spicy with a pinch of chili in the sauce + prik nam som (Thai chilies in rice vinegar) on the side. Make-or-break: hotter pan than feels right, and cook in one layer — crowding steams instead of charring. Serves 2. Sub broccolini/broccoli for gai lan.',
+    ingredients: [
+      { name: 'Wide rice noodles', normalized_name: 'rice noodles' },
+      { name: 'Chicken thigh', normalized_name: 'chicken thighs' },
+      { name: 'Eggs', normalized_name: 'eggs' },
+      { name: 'Chinese broccoli (gai lan)', normalized_name: 'chinese broccoli' },
+      { name: 'Garlic', normalized_name: 'garlic', assumed_staple: true },
+      { name: 'Dark soy sauce', normalized_name: 'dark soy sauce', assumed_staple: true },
+      { name: 'Soy sauce', normalized_name: 'soy sauce', assumed_staple: true },
+      { name: 'Oyster sauce', normalized_name: 'oyster sauce' },
+      { name: 'Sugar', normalized_name: 'sugar', assumed_staple: true },
+      { name: 'Chili crisp or Thai chili', normalized_name: 'chili crisp', assumed_staple: true },
+      { name: 'Neutral oil', normalized_name: 'neutral oil', assumed_staple: true },
+    ],
+  },
 
   // --- Bar: favorites + classics (real specs) ---
   {

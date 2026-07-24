@@ -35,6 +35,47 @@ export const PALATE = {
   carbs_veg: ['rice', 'sweet potato', 'zucchini', 'cucumber'],
 } as const;
 
+/**
+ * Cuisine leanings, per person. We lean Asian but explore ANYTHING — no cuisine
+ * is off the table (Ethiopian, wherever). The AI generator reads this to vary
+ * suggestions with intent, not randomly.
+ */
+export const CUISINES = {
+  japanese: ['miso', 'dashi', 'shoyu', 'mirin', 'yuzu', 'togarashi', 'katsu', 'nori', 'kewpie', 'furikake'],
+  thai: ['fish sauce', 'lime', 'lemongrass', 'thai chili', 'coconut', 'galangal', 'basil', 'tamarind'],
+  chinese: ['soy', 'shaoxing', 'oyster sauce', 'sichuan', 'black bean', 'hoisin', 'ginger', 'scallion'],
+  korean: ['gochujang', 'gochugaru', 'kimchi', 'sesame', 'doenjang', 'ssamjang'],
+  french: ['butter', 'shallot', 'thyme', 'wine', 'dijon', 'tarragon', 'gruyere', 'creme'],
+  italian: ['garlic', 'basil', 'parmesan', 'tomato', 'olive oil', 'oregano', 'pancetta'],
+} as const;
+
+/** Who leans where — Anna → Japanese; Marc → Thai/Chinese/Korean; both love French & Italian. */
+export const FAVORITES = {
+  anna: ['japanese'],
+  marc: ['thai', 'chinese', 'korean'],
+  shared: ['french', 'italian'],
+  explore: true, // will try any cuisine
+} as const;
+
+/** Always-stocked, Asian-leaning pantry. The generator can assume these on hand. */
+export const PANTRY_STAPLES = [
+  'sesame oil', 'soy sauce', 'fish sauce', 'rice vinegar', 'gochujang', 'gochugaru',
+  'kewpie mayo', 'miso', 'chili crisp', 'oyster sauce', 'msg', 'mirin',
+  'jasmine rice', 'short-grain rice', 'garlic', 'ginger', 'scallion', 'butter',
+] as const;
+
+/**
+ * Seasoning stance: season BOLDLY — lots of spice, umami (MSG, fish sauce). The
+ * only time to pull back to just salt & pepper is to let a hero ingredient shine
+ * (fresh heirloom tomatoes, great fish). Never suggest bland salt-and-pepper by
+ * default.
+ */
+export const SEASONING_RULE = {
+  default: 'bold — spices, umami (MSG welcome), a finishing sauce',
+  restraint_only_for: 'a pristine hero ingredient (heirloom tomato, sashimi-grade fish)',
+  loves_msg: true,
+} as const;
+
 /** Finishing-move library by lean. Simple food should always land *finished*. */
 export const FINISHING_MOVES = {
   asian: ['scallion-ginger oil', 'chili crisp + lime', 'miso butter', 'sesame-soy dressing'],
@@ -57,6 +98,10 @@ export function palateMatchScore(recipe: RecipeInput): number {
   if (leanHit(PALATE.med_meast)) score += 0.4;
   if (leanHit(PALATE.proteins)) score += 0.15;
   if (leanHit(PALATE.carbs_veg)) score += 0.1;
+  // Any beloved cuisine (French, Italian, Japanese, Thai, Chinese, Korean) counts.
+  if (Object.values(CUISINES).some((list) => leanHit(list))) score += 0.2;
+  // Umami they specifically love — MSG, fish sauce, gochujang, kewpie.
+  if (/(msg|fish sauce|gochujang|kewpie|umami)/.test(text)) score += 0.15;
   // A "finishing move" present (sauce/dressing/aioli) is a strong taste signal.
   if (/(sauce|aioli|dressing|drizzle|vinaigrette|oil|butter)/.test(text)) score += 0.1;
 

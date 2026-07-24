@@ -19,6 +19,7 @@ export const SAVED_RECIPES_SEED: RecipeInput[] = [
     leftover_score: 0.6,
     saved: true,
     tags: ['asian', 'italian', 'umami', 'weeknight', 'pasta'],
+    nutrition: { calories: 620, protein_g: 36, carbs_g: 62, sugar_g: 12, fat_g: 24, fiber_g: 6, basis: 'estimate' },
     finishing_move: 'chili crisp + scallion',
     notes:
       'Soy/sesame/MSG over crushed tomatoes, dried porcini for depth + body, butter mounted off heat. Raw meatballs poach in the sauce. Cook meatballs to 165°F. Thick-ish: reduce uncovered, bloom tomato paste, cornstarch slurry as insurance.',
@@ -134,6 +135,7 @@ export const SAVED_RECIPES_SEED: RecipeInput[] = [
     leftover_score: 0.6,
     saved: true,
     tags: ['side', 'vegan', 'make-ahead', 'japanese', 'yaki-imo', 'sweet potato'],
+    nutrition: { calories: 180, protein_g: 4, carbs_g: 41, sugar_g: 13, fat_g: 0, fiber_g: 6, basis: 'estimate' },
     finishing_move: 'flaky salt (or a knob of butter)',
     steps: [
       'Wash and dry the sweet potato; leave the skin on.',
@@ -155,6 +157,7 @@ export const SAVED_RECIPES_SEED: RecipeInput[] = [
     leftover_score: 0.7,
     saved: true,
     tags: ['soup', 'french', 'classic', 'comfort'],
+    nutrition: { calories: 480, protein_g: 21, carbs_g: 34, sugar_g: 9, fat_g: 27, fiber_g: 4, sat_fat_g: 15, sodium_mg: 1100, basis: 'estimate' },
     finishing_move: 'broiled Gruyère crust',
     steps: [
       'Add the onions, butter, olive oil and salt to the pot and start cooking — caramelization can take an hour.',
@@ -194,6 +197,7 @@ export const SAVED_RECIPES_SEED: RecipeInput[] = [
     leftover_score: 0.4,
     saved: true,
     tags: ['asian', 'thai', 'noodles', 'weeknight', 'spicy'],
+    nutrition: { calories: 600, protein_g: 32, carbs_g: 78, sugar_g: 12, fat_g: 18, fiber_g: 4, sodium_mg: 1400, basis: 'estimate' },
     finishing_move: 'chili vinegar (prik nam som) on the side',
     steps: [
       'Mix the sauce: 1½ Tbsp dark soy (color), 1 Tbsp regular soy, 1 Tbsp oyster sauce, 2 tsp sugar, optional 1 tsp fish sauce, white pepper.',

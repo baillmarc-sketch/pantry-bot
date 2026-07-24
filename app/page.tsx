@@ -6,6 +6,7 @@ import { Header, StatusChip } from './ui';
 import { Toolbar } from './controls';
 import { useMise } from '../lib/store/useMise';
 import { freezeTip } from '../lib/core/freeze';
+import { balanceRating } from '../lib/core/health';
 import type { RankedRecipe } from '../lib/core/ranker';
 import type { SpoilageStatus } from '../lib/core/spoilage';
 
@@ -32,6 +33,8 @@ function RecipeCard({
 }) {
   const useSoonDisplay = r.use_soon_items.map(disp);
   const otherUsed = r.inventory_items_used.filter((n) => !r.use_soon_items.includes(n));
+  const rating = balanceRating(r);
+  const n = r.nutrition;
   return (
     <article className="card recipe">
       <div className="title">
@@ -44,7 +47,26 @@ function RecipeCard({
         <span>⏱ {r.time_estimate} min</span>
         <span>🍽 serves {r.servings}</span>
         {r.leftover_score >= 0.5 && <span>♻️ good leftovers</span>}
+        {rating && (
+          <span className={`chip balance ${rating.tier}`} title={rating.good.join(' · ')}>
+            <span className="glyph" aria-hidden>
+              {rating.glyph}
+            </span>
+            {rating.label}
+          </span>
+        )}
       </div>
+
+      {n && (
+        <div className="macros">
+          <b>≈ {n.calories}</b> cal · {n.protein_g}g protein · {n.carbs_g}g carbs ·{' '}
+          {n.sugar_g}g sugar · {n.fat_g}g fat{n.fiber_g != null ? ` · ${n.fiber_g}g fiber` : ''}
+          <span className="est" title="Rough estimate per serving — not exact tracking">
+            {' '}est.
+          </span>
+        </div>
+      )}
+      {rating?.nudge && <div className="balance-nudge">{rating.nudge}</div>}
 
       {(r.use_soon_items.length > 0 || otherUsed.length > 0) && (
         <div className="uses">
@@ -188,6 +210,12 @@ export default function HomePage() {
             />
           ))
         )}
+
+        <div className="callout">
+          <b>Balance</b>, not a diet: the rating rewards veg, fruit &amp; clean protein and nudges
+          you to round out the day — but butter, sugar &amp; MSG are fair game where they belong,
+          and treats are treats. Macros are rough per-serving estimates.
+        </div>
       </div>
     </>
   );

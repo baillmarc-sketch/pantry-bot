@@ -130,11 +130,35 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.01em; }
 .recipe .meta {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 6px 14px;
   margin-top: 12px;
   font-size: 14px;
   color: var(--ink-soft);
 }
+
+/* Balance rating chips */
+.chip.balance { font-size: 12.5px; }
+.chip.balance.powerhouse { color: var(--olive); border-color: color-mix(in srgb, var(--olive) 45%, var(--line)); background: color-mix(in srgb, var(--olive) 8%, var(--paper)); }
+.chip.balance.balanced { color: var(--olive); border-color: color-mix(in srgb, var(--olive) 35%, var(--line)); }
+.chip.balance.hearty { color: var(--amber); border-color: color-mix(in srgb, var(--amber) 40%, var(--line)); }
+.chip.balance.treat { color: var(--chili); border-color: color-mix(in srgb, var(--chili) 40%, var(--line)); }
+
+.macros {
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.macros b { color: var(--ink); }
+.macros .est {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--amber);
+}
+.balance-nudge { margin-top: 6px; font-size: 13px; color: var(--olive); }
 .recipe .uses { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
 .recipe .needs { margin-top: 8px; font-size: 14px; color: var(--ink-soft); }
 .recipe .finish {

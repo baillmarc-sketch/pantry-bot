@@ -78,6 +78,7 @@ const RECIPE_FIXTURES: RecipeInput[] = [
     servings: 2,
     time_estimate: 25,
     leftover_score: 0.4,
+    nutrition: { calories: 520, protein_g: 34, carbs_g: 55, sugar_g: 6, fat_g: 16, fiber_g: 3, basis: 'estimate' },
     tags: ['asian', 'one-pan'],
     ingredients: [
       { name: 'salmon' },
@@ -93,6 +94,7 @@ const RECIPE_FIXTURES: RecipeInput[] = [
     servings: 2,
     time_estimate: 40,
     leftover_score: 0.7,
+    nutrition: { calories: 560, protein_g: 38, carbs_g: 40, sugar_g: 10, fat_g: 26, fiber_g: 7, basis: 'estimate' },
     tags: ['med', 'sheet-pan'],
     ingredients: [
       { name: 'chicken thighs' },
@@ -108,6 +110,7 @@ const RECIPE_FIXTURES: RecipeInput[] = [
     servings: 2,
     time_estimate: 10,
     leftover_score: 0.2,
+    nutrition: { calories: 90, protein_g: 2, carbs_g: 8, sugar_g: 4, fat_g: 6, fiber_g: 2, basis: 'estimate' },
     tags: ['asian', 'side'],
     ingredients: [
       { name: 'cucumber' },

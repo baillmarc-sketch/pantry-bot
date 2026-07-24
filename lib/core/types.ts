@@ -112,4 +112,19 @@ export interface RecipeInput {
   garnish?: string;
   /** Whose favorite it is, for the Bar. */
   favorite_of?: 'marc' | 'anna' | 'both';
+  /** Per-serving macros. Estimates are labeled as such — never presented as exact. */
+  nutrition?: NutritionInfo;
+}
+
+export interface NutritionInfo {
+  calories: number;
+  protein_g: number;
+  carbs_g: number;
+  sugar_g: number;
+  fat_g: number;
+  fiber_g?: number;
+  sat_fat_g?: number;
+  sodium_mg?: number;
+  /** Where the numbers came from — drives the "≈ estimated" labeling in the UI. */
+  basis: 'estimate' | 'label' | 'usda' | 'ai';
 }

@@ -16,6 +16,7 @@ and [`BUILDER-PROFILE.md`](BUILDER-PROFILE.md) for the full intent.
 | **1** | Likes list + search + categories; save-your-own recipes on the Cook screen | ✅ done |
 | **1** | Bar: bottle tracking + cocktail book with "shakeable now" | ✅ done |
 | **1** | Daily "use it up" + freeze tips; best-by override; bigger recipe/drink catalogs | ✅ done |
+| **1** | Balance health rating + macro display; expanded per-person taste profile | ✅ done |
 | **2** | Firebase + Google-SSO port (rules, env, guide staged) · AI vision adapter | groundwork ready |
 | 2 | Real `AnthropicAIProvider` + fridge vision (propose-only) | planned |
 | 2 | Supabase + RLS for two-phone sync (replaces localStorage) | planned |
@@ -89,8 +90,8 @@ No build config required: build `next build`, output `.next`, install `npm insta
 ### Proof (last run)
 
 ```
-Test Files  12 passed (12)
-     Tests  60 passed (60)        # vitest: unit
+Test Files  13 passed (13)
+     Tests  67 passed (67)        # vitest: unit
 25/25 PASS  ALL PASS              # scripts/e2e.mjs: headless loop
 ```
 Unit covers: event-sourced derivation incl. two-phone reconciliation & no-negative/no-silent-loss;

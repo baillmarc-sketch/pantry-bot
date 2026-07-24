@@ -7,6 +7,7 @@ import { Toolbar } from './controls';
 import { useMise } from '../lib/store/useMise';
 import { freezeTip } from '../lib/core/freeze';
 import { balanceRating } from '../lib/core/health';
+import { deriveEffort, filterRecipes, type Effort } from '../lib/core/effort';
 import type { RankedRecipe } from '../lib/core/ranker';
 import type { SpoilageStatus } from '../lib/core/spoilage';
 
@@ -46,6 +47,7 @@ function RecipeCard({
       <div className="meta">
         <span>⏱ {r.time_estimate} min</span>
         <span>🍽 serves {r.servings}</span>
+        <span>{deriveEffort(r) === 'involved' ? '🧑‍🍳 Involved' : '⚡ Easy'}</span>
         {r.leftover_score >= 0.5 && <span>♻️ good leftovers</span>}
         {rating && (
           <span className={`chip balance ${rating.tier}`} title={rating.good.join(' · ')}>
@@ -126,6 +128,12 @@ function RecipeCard({
 export default function HomePage() {
   const { snapshot, recipes, yourRecipes, cookRecipe, removeRecipe } = useMise();
   const [msg, setMsg] = useState('');
+  const [maxMin, setMaxMin] = useState<number | null>(null);
+  const [effort, setEffort] = useState<Effort | null>(null);
+
+  const shownRecipes = filterRecipes(recipes, { maxMinutes: maxMin, effort });
+  const shownYours = filterRecipes(yourRecipes, { maxMinutes: maxMin, effort });
+  const filtering = maxMin !== null || effort !== null;
 
   const nameToDisplay = new Map(snapshot.map((s) => [s.normalized_name, s.display_name]));
   const nameToStatus = new Map<string, SpoilageStatus>(
@@ -155,6 +163,35 @@ export default function HomePage() {
       <div className="screen">
         <Toolbar />
 
+        <div className="planner">
+          <div className="planner-row">
+            <span className="planner-label">Time</span>
+            <div className="seg" role="group" aria-label="Time available">
+              {([['Any', null], ['≤30m', 30], ['≤60m', 60]] as const).map(([label, val]) => (
+                <button key={label} className={maxMin === val ? 'on' : ''} onClick={() => setMaxMin(val)}>
+                  {label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="planner-row">
+            <span className="planner-label">Effort</span>
+            <div className="seg" role="group" aria-label="Effort level">
+              {([['Any', null], ['Easy', 'easy'], ['Involved', 'involved']] as const).map(
+                ([label, val]) => (
+                  <button
+                    key={label}
+                    className={effort === val ? 'on' : ''}
+                    onClick={() => setEffort(val)}
+                  >
+                    {label}
+                  </button>
+                ),
+              )}
+            </div>
+          </div>
+        </div>
+
         <p aria-live="polite" className="callout" style={{ display: msg ? 'block' : 'none' }}>
           {msg}
         </p>
@@ -183,9 +220,16 @@ export default function HomePage() {
           <div className="callout">Nothing urgent — nice. Cook whatever sounds good.</div>
         )}
 
-        {recipes.map((r) => (
+        {shownRecipes.map((r) => (
           <RecipeCard key={r.id} r={r} disp={disp} statusOf={statusOf} onCook={() => cook(r)} />
         ))}
+        {filtering && shownRecipes.length === 0 && (
+          <div className="empty">
+            No suggestions fit {effort === 'involved' ? 'an involved' : effort ?? 'that'} pick
+            {maxMin ? ` in ≤${maxMin}m` : ''}. Loosen the filter — or, once AI is on, have it invent
+            one to fit.
+          </div>
+        )}
 
         <div className="section-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
           <span>Your recipes</span>
@@ -198,8 +242,10 @@ export default function HomePage() {
           <div className="empty">
             No saved recipes yet. <Link href="/recipes/new">Add one</Link> and it’ll live here.
           </div>
+        ) : shownYours.length === 0 ? (
+          <div className="empty">None of your saved recipes fit that time/effort — loosen the filter.</div>
         ) : (
-          yourRecipes.map((r) => (
+          shownYours.map((r) => (
             <RecipeCard
               key={r.id}
               r={r}

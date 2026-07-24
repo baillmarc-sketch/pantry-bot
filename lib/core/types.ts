@@ -91,6 +91,9 @@ export interface RecipeInput {
   servings: number;
   /** minutes */
   time_estimate: number;
+  /** How involved it is — 'easy' weeknight vs. 'involved' project (fresh pasta, injera).
+   *  Optional; inferred from technique/steps when absent (see lib/core/effort.ts). */
+  effort?: 'easy' | 'involved';
   ingredients: RecipeIngredient[];
   /** 0..1 — how well it keeps / reheats as leftovers. */
   leftover_score?: number;

@@ -159,6 +159,22 @@ h1, h2, h3 { margin: 0; letter-spacing: -0.01em; }
   color: var(--amber);
 }
 .balance-nudge { margin-top: 6px; font-size: 13px; color: var(--olive); }
+
+/* Cook planner (time + effort dials) */
+.planner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 2px 4px 10px;
+}
+.planner-row { display: flex; align-items: center; gap: 8px; }
+.planner-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
 .recipe .uses { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
 .recipe .needs { margin-top: 8px; font-size: 14px; color: var(--ink-soft); }
 .recipe .finish {

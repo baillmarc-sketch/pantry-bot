@@ -266,6 +266,41 @@ export const SAVED_RECIPES_SEED: RecipeInput[] = [
       { name: 'Cilantro', normalized_name: 'fresh herbs' },
     ],
   },
+  {
+    id: 'saved-spicy-cucumber-noodle-crispy-beef',
+    title: 'Spicy Cucumber Noodle Salad with Crispy Beef',
+    servings: 2,
+    time_estimate: 35,
+    leftover_score: 0.4,
+    saved: true,
+    tags: ['asian', 'noodles', 'beef', 'salad', 'spicy', 'brown rice noodles'],
+    finishing_move: 'crispy hoisin beef + sesame',
+    nutrition: { calories: 650, protein_g: 30, carbs_g: 60, sugar_g: 12, fat_g: 30, fiber_g: 3, sodium_mg: 1300, basis: 'estimate' },
+    steps: [
+      'Velvet the beef (the secret): toss the ground beef with ~¼ tsp baking soda per ½ lb (a splash of water or soy helps); rest 15–20 min, then pat dry. Keeps it tender and lets it crisp.',
+      'Make the dressing (the hero): whisk soy sauce, sesame oil, and miso paste until emulsified. Add chili crisp or chili flakes to taste — that\'s the "spicy".',
+      'Smash and slice the mini cucumbers; toss into the dressing with sliced spring onions and sesame seeds.',
+      'Cook the brown rice noodles to package, rinse and cool, then fold into the cucumber salad.',
+      'Fry the beef: hot pan, press into small clumps and sear undisturbed until deeply browned and crispy.',
+      'Add a good squeeze of hoisin sauce and toss to glaze the crispy beef.',
+      'Pile the crispy beef over the cucumber-noodle salad; finish with more sesame and spring onion.',
+    ],
+    notes:
+      'From @thegoodbite. Quantities are approximate — the reel showed ingredients, not measurements. Dressing is roughly equal-ish soy sauce and sesame oil with a spoon of miso, whisked. "Spicy" = add chili crisp/flakes to taste. The two keys: VELVETING the beef (baking soda) for tender-then-crispy crumbles, and finishing it with HOISIN. Served over brown rice noodles.',
+    ingredients: [
+      { name: 'Ground beef', normalized_name: 'ground beef' },
+      { name: 'Baking soda (to velvet)', normalized_name: 'baking soda', assumed_staple: true },
+      { name: 'Soy sauce', normalized_name: 'soy sauce', assumed_staple: true },
+      { name: 'Sesame oil', normalized_name: 'sesame oil', assumed_staple: true },
+      { name: 'Miso paste', normalized_name: 'miso', assumed_staple: true },
+      { name: 'Hoisin sauce', normalized_name: 'hoisin sauce' },
+      { name: 'Brown rice noodles', normalized_name: 'rice noodles' },
+      { name: 'Mini cucumbers', normalized_name: 'cucumber' },
+      { name: 'Spring onions', normalized_name: 'scallion' },
+      { name: 'Sesame seeds', normalized_name: 'sesame seeds', assumed_staple: true },
+      { name: 'Chili crisp (to taste)', normalized_name: 'chili crisp', assumed_staple: true },
+    ],
+  },
 
   // --- Bar: favorites + classics (real specs) ---
   {

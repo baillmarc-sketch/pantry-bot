@@ -33,6 +33,30 @@ describe('parseRecipeForm', () => {
     );
     expect(res.recipe!.finishing_move).toBe('chili crisp + scallion');
   });
+
+  it('parses method into steps (by line, keeping commas) + strips pasted numbering', () => {
+    const res = parseRecipeForm(
+      {
+        title: 'Sugo',
+        ingredients: 'tomatoes',
+        steps: '1. Sear the beef, then rest it\n2. Build the sauce\n\n3. Simmer 20 min',
+        effort: 'involved',
+      },
+      'id',
+    );
+    expect(res.recipe!.steps).toEqual([
+      'Sear the beef, then rest it',
+      'Build the sauce',
+      'Simmer 20 min',
+    ]);
+    expect(res.recipe!.effort).toBe('involved');
+  });
+
+  it('omits steps/effort when not provided', () => {
+    const res = parseRecipeForm({ title: 'T', ingredients: 'x' }, 'id');
+    expect(res.recipe!.steps).toBeUndefined();
+    expect(res.recipe!.effort).toBeUndefined();
+  });
 });
 
 describe('ranker honors a saved recipe finishing move', () => {

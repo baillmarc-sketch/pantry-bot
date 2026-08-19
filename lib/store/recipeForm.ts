@@ -15,6 +15,9 @@ export interface RecipeFormInput {
   finishing_move?: string;
   leftover_score?: number;
   notes?: string;
+  /** Method — one step per line (NOT split on commas; steps contain commas). */
+  steps?: string;
+  effort?: 'easy' | 'involved';
 }
 
 export interface ParseResult {
@@ -38,6 +41,14 @@ function splitList(s: string): string[] {
   return s
     .split(/[\n,]+/)
     .map((x) => x.trim())
+    .filter(Boolean);
+}
+
+/** Lines only — steps keep their commas. */
+function splitLines(s: string): string[] {
+  return s
+    .split(/\r?\n+/)
+    .map((x) => x.trim().replace(/^\d+[.)]\s*/, '')) // strip a leading "1." if pasted
     .filter(Boolean);
 }
 
@@ -68,6 +79,8 @@ export function parseRecipeForm(form: RecipeFormInput, id: string): ParseResult 
     tags: form.tags ? splitList(form.tags) : undefined,
     finishing_move: form.finishing_move?.trim() || undefined,
     notes: form.notes?.trim() || undefined,
+    ...(form.steps && splitLines(form.steps).length ? { steps: splitLines(form.steps) } : {}),
+    ...(form.effort ? { effort: form.effort } : {}),
   };
 
   return { ok: true, errors: [], recipe };

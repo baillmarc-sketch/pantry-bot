@@ -108,6 +108,7 @@ await page.getByRole('link', { name: '+ Add a recipe' }).click();
 await page.waitForURL('**/recipes/new');
 await page.getByLabel('Title').fill('Test Miso Noodles');
 await page.getByLabel('Ingredients — one per line').fill('rice noodles\nmiso\nscallion');
+await page.getByLabel('Method — one step per line').fill('Boil the noodles\nToss with miso and scallion');
 await page.getByRole('button', { name: 'Save to Cook screen' }).click();
 await page.waitForURL(/\/$|\/$/);
 await page.waitForSelector('.recipe');
@@ -117,6 +118,13 @@ ok(yourAfter === yourBefore + 1, `saving added a card (${yourBefore} -> ${yourAf
 ok(
   await page.getByText('Test Miso Noodles').first().isVisible(),
   'new saved recipe appears on Cook screen',
+);
+// the method captured by the form renders
+const newCard = page.locator('article.recipe', { hasText: 'Test Miso Noodles' }).first();
+await newCard.locator('details.method summary').click();
+ok(
+  await newCard.getByText('Boil the noodles').first().isVisible(),
+  'method steps entered in the form render on the card',
 );
 // persists across reload
 await page.reload({ waitUntil: 'load' });

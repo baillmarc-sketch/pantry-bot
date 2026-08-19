@@ -301,6 +301,37 @@ export const SAVED_RECIPES_SEED: RecipeInput[] = [
       { name: 'Chili crisp (to taste)', normalized_name: 'chili crisp', assumed_staple: true },
     ],
   },
+  {
+    id: 'saved-umami-pickled-carrots',
+    title: 'Umami Pickled Carrots',
+    servings: 8,
+    time_estimate: 20,
+    effort: 'easy',
+    leftover_score: 0.9,
+    saved: true,
+    tags: ['condiment', 'pickle', 'make-ahead', 'vegetable', 'umami'],
+    finishing_move: 'spoon over rice bowls, salads & cheese toasties',
+    nutrition: { calories: 45, protein_g: 1, carbs_g: 10, sugar_g: 8, fat_g: 1, fiber_g: 1, basis: 'estimate' },
+    steps: [
+      'Make a simple brine: combine the vinegar, water and sugar in a pot and bring to a boil.',
+      'Let it cool to room temperature.',
+      'Process the carrots however you like — peel and slice thin on a mandoline, cut chunky by knife, or grate.',
+      'Toss the carrots with the salt and chili crisp.',
+      'Pack into mason jars or containers.',
+      'Cover with the pickling liquid.',
+      'Store in the fridge for up to 2 weeks.',
+      'Use to garnish salads, rice bowls, cheese toasties — you name it.',
+    ],
+    notes:
+      'Makes ~1 L. Ingredients: 300 g carrots · 1 jar Burnt Orange Chili Crisp · 12 g salt · 100 g sugar · 100 g vinegar · 100 g water. Keeps up to 2 weeks refrigerated. From stokeathome.ca.',
+    ingredients: [
+      { name: 'Carrots', normalized_name: 'carrot' },
+      { name: 'Burnt Orange Chili Crisp', normalized_name: 'chili crisp', assumed_staple: true },
+      { name: 'Salt', normalized_name: 'salt', assumed_staple: true },
+      { name: 'Sugar', normalized_name: 'sugar', assumed_staple: true },
+      { name: 'Vinegar', normalized_name: 'vinegar', assumed_staple: true },
+    ],
+  },
 
   // --- Bar: favorites + classics (real specs) ---
   {

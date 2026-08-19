@@ -12,6 +12,7 @@ const BLANK: RecipeFormInput = {
   time_estimate: '',
   servings: '',
   ingredients: '',
+  steps: '',
   tags: '',
   finishing_move: '',
   notes: '',
@@ -90,6 +91,34 @@ export default function NewRecipePage() {
               onChange={(e) => set('ingredients', e.target.value)}
               placeholder={'crushed tomatoes\ndried porcini\nchicken meatballs\nonion'}
             />
+          </div>
+
+          <div>
+            <label htmlFor="steps">Method — one step per line</label>
+            <textarea
+              id="steps"
+              value={form.steps}
+              onChange={(e) => set('steps', e.target.value)}
+              placeholder={'Sear the meatballs\nBuild the sauce\nSimmer 20 min'}
+            />
+          </div>
+
+          <div>
+            <label>Effort</label>
+            <div className="seg" role="group" aria-label="Effort" style={{ marginTop: 6 }}>
+              {([['Auto', undefined], ['Easy', 'easy'], ['Involved', 'involved']] as const).map(
+                ([label, val]) => (
+                  <button
+                    key={label}
+                    type="button"
+                    className={form.effort === val ? 'on' : ''}
+                    onClick={() => set('effort', val)}
+                  >
+                    {label}
+                  </button>
+                ),
+              )}
+            </div>
           </div>
 
           <div>

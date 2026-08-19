@@ -91,8 +91,8 @@ No build config required: build `next build`, output `.next`, install `npm insta
 
 ```
 Test Files  15 passed (15)
-     Tests  75 passed (75)        # vitest: unit
-25/25 PASS  ALL PASS              # scripts/e2e.mjs: headless loop
+     Tests  77 passed (77)        # vitest: unit
+28/28 PASS  ALL PASS              # scripts/e2e.mjs: headless loop
 ```
 Unit covers: event-sourced derivation incl. two-phone reconciliation & no-negative/no-silent-loss;
 spoilage transitions (fresh/soon/today/past/unknown) + conservative fallbacks + opened-clock;

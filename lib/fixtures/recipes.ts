@@ -332,6 +332,43 @@ export const SAVED_RECIPES_SEED: RecipeInput[] = [
       { name: 'Vinegar', normalized_name: 'vinegar', assumed_staple: true },
     ],
   },
+  {
+    id: 'saved-single-serve-carrot-cake',
+    title: 'Single-Serve Carrot Cake (Mug)',
+    servings: 1,
+    time_estimate: 10,
+    effort: 'easy',
+    leftover_score: 0.3,
+    saved: true,
+    tags: ['dessert', 'mug cake', 'single-serve', 'no-waste', 'carrot'],
+    finishing_move: 'cream cheese frosting (optional)',
+    nutrition: { calories: 520, protein_g: 9, carbs_g: 55, sugar_g: 38, fat_g: 30, fiber_g: 2, basis: 'estimate' },
+    steps: [
+      'Lightly grease a microwave-safe mug or 4-inch ramekin with oil.',
+      'Whisk the egg, brown sugar, and oil until smooth.',
+      'Fold in the flour, baking powder, cinnamon, nutmeg, and salt.',
+      'Gently mix in the grated carrot.',
+      'Cook — microwave on high 60–90 sec (toothpick comes out clean), OR bake at 350°F (175°C) in a ramekin 20–25 min.',
+      'Let it stand 5 minutes before removing.',
+      'Optional frosting: mix cream cheese, powdered sugar, and vanilla; spread on the cooled cake.',
+    ],
+    notes:
+      'Single-serve, no-waste. CAKE: 1 large egg · ¼ cup packed brown sugar · 2 tbsp vegetable oil · ½ cup grated carrot (~1 medium) · 3 tbsp all-purpose flour · ½ tsp baking powder · ¼ tsp cinnamon · pinch nutmeg · ⅛ tsp salt. FROSTING (optional): 1 tbsp softened cream cheese · 1 tsp powdered sugar · ¼ tsp vanilla. Tips: microwave method is ~2 min; swap oat flour or add 1 tbsp Greek yogurt for moisture; keep unfrosted up to 3 days refrigerated (frost before serving).',
+    ingredients: [
+      { name: 'Egg', normalized_name: 'eggs' },
+      { name: 'Brown sugar', normalized_name: 'brown sugar' },
+      { name: 'Vegetable oil', normalized_name: 'neutral oil', assumed_staple: true },
+      { name: 'Grated carrot', normalized_name: 'carrot' },
+      { name: 'All-purpose flour', normalized_name: 'flour', assumed_staple: true },
+      { name: 'Baking powder', normalized_name: 'baking powder', assumed_staple: true },
+      { name: 'Cinnamon', normalized_name: 'cinnamon', assumed_staple: true },
+      { name: 'Nutmeg', normalized_name: 'nutmeg', assumed_staple: true },
+      { name: 'Salt', normalized_name: 'salt', assumed_staple: true },
+      { name: 'Cream cheese (optional)', normalized_name: 'cream cheese' },
+      { name: 'Powdered sugar (optional)', normalized_name: 'powdered sugar' },
+      { name: 'Vanilla (optional)', normalized_name: 'vanilla', assumed_staple: true },
+    ],
+  },
 
   // --- Bar: favorites + classics (real specs) ---
   {

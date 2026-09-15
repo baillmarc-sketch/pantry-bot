@@ -6,6 +6,9 @@ Built for a 2-person household. Aesthetic: **"Warm Market Stall"** — cream pap
 text, chili-crisp red, produce-green. See [`docs/MISE-BUILD-PLAN.md`](docs/MISE-BUILD-PLAN.md)
 and [`BUILDER-PROFILE.md`](BUILDER-PROFILE.md) for the full intent.
 
+**Resuming or planning?** Start with [`docs/HANDOFF.md`](docs/HANDOFF.md) (current state) and
+[`docs/PRD.md`](docs/PRD.md) (the plan to launch for the two of us).
+
 ## Status
 
 | Phase | What | State |
